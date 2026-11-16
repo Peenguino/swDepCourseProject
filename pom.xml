@@ -199,6 +199,8 @@
               <inputExclude>src/test/**/*.hdr</inputExclude>
               <inputExclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</inputExclude>
               <inputExclude>.asf.yaml</inputExclude>
+              <inputExclude>README.md</inputExclude>
+              <inputExclude>reports/**</inputExclude>
             </inputExcludes>
           </configuration>
         </plugin>
