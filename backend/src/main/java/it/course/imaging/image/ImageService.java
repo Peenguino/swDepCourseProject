@@ -132,7 +132,7 @@ public class ImageService {
             BufferedImage image = Imaging.getBufferedImage(input);
             byte[] output = Imaging.writeImageToBytes(image, ImageFormats.PNG);
             return new PngImage(output, asset.getTitle() + ".png");
-        } catch (ImagingException e) {
+        } catch (ImagingException | IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
                     "Questo formato non può essere decodificato", e);
         } catch (IOException e) {
