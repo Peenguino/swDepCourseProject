@@ -22,10 +22,10 @@ jobs:
         java-version: 21
         cache: maven
 
-    - name: Test and install Commons Imaging
+    - name: Test and install Commons Imaging Library
       run: mvn -B clean install jacoco:report
 
-    - name: Test backend and generate coverage
+    - name: Test and generate coverage on Backend Service
       run: mvn -B -f backend/pom.xml verify
 
     - name: Upload JaCoCo reports
