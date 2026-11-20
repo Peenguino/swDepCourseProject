@@ -201,6 +201,12 @@
               <inputExclude>.asf.yaml</inputExclude>
               <inputExclude>README.md</inputExclude>
               <inputExclude>reports/**</inputExclude>
+              <inputExclude>backend/**</inputExclude>
+              <inputExclude>frontend/**</inputExclude>
+              <inputExclude>Dockerfile</inputExclude>
+              <inputExclude>docker-compose.yml</inputExclude>
+              <inputExclude>.dockerignore</inputExclude>
+              <inputExclude>.env.example</inputExclude>
             </inputExcludes>
           </configuration>
         </plugin>
@@ -226,6 +232,12 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>5.24.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
