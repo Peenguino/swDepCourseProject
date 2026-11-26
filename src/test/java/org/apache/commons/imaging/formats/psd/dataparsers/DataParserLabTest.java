@@ -18,6 +18,11 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.image.BufferedImage;
+
+import org.apache.commons.imaging.color.ColorConversions;
+import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.junit.jupiter.api.Test;
 
 class DataParserLabTest {
@@ -27,6 +32,18 @@ class DataParserLabTest {
         final DataParserLab dataParserLab = new DataParserLab();
 
         assertEquals(3, dataParserLab.getBasicChannelsCount());
+    }
+
+    @Test
+    void testParseDataSubtractsChromaBias() {
+        // a* and b* are stored with a +128 bias; L* is used as-is.
+        final int[][][] data = { { { 53 } }, { { 80 + 128 } }, { { 67 + 128 } } };
+        final PsdImageContents contents = new PsdImageContents(new PsdHeaderInfo(1, new byte[6], 3, 1, 1, 8, 9), 0, 0, 0, 0);
+        final BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+
+        new DataParserLab().parseData(data, image, contents);
+
+        assertEquals(ColorConversions.convertCieLabToArgbTest(53, 80, 67), image.getRGB(0, 0));
     }
 
 }

@@ -18,6 +18,11 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.image.BufferedImage;
+
+import org.apache.commons.imaging.color.ColorConversions;
+import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.junit.jupiter.api.Test;
 
 class DataParserCmykTest {
@@ -27,6 +32,24 @@ class DataParserCmykTest {
         final DataParserCmyk dataParserCmyk = new DataParserCmyk();
 
         assertEquals(4, dataParserCmyk.getBasicChannelsCount());
+    }
+
+    @Test
+    void testParseDataInvertsStoredChannels() {
+        // PSD stores CMYK inverted: all-255 means no ink (white), all-0 means full ink (black).
+        final int[][][] whiteData = { { { 255 } }, { { 255 } }, { { 255 } }, { { 255 } } };
+        final int[][][] blackData = { { { 0 } }, { { 0 } }, { { 0 } }, { { 0 } } };
+        final PsdImageContents contents = new PsdImageContents(new PsdHeaderInfo(1, new byte[6], 4, 1, 1, 8, 4), 0, 0, 0, 0);
+
+        final BufferedImage white = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+        new DataParserCmyk().parseData(whiteData, white, contents);
+        assertEquals(ColorConversions.convertCmykToRgb(0, 0, 0, 0), white.getRGB(0, 0));
+        assertEquals(0xffffffff, white.getRGB(0, 0));
+
+        final BufferedImage black = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+        new DataParserCmyk().parseData(blackData, black, contents);
+        assertEquals(ColorConversions.convertCmykToRgb(255, 255, 255, 255), black.getRGB(0, 0));
+        assertEquals(0xff000000, black.getRGB(0, 0));
     }
 
 }

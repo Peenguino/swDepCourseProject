@@ -152,6 +152,49 @@ class ImageServiceTest {
     }
 
     @Test
+    void testUploadTruncatesLongFilenameAndDefaultsMissingName() throws IOException {
+        when(repository.save(any(ImageAsset.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        String longName = "a".repeat(300) + ".png";
+
+        ImageResponse truncated = service.upload(
+                new MockMultipartFile("file", longName, "image/png", png()), "Titolo", "");
+        ImageResponse unnamed = service.upload(
+                new MockMultipartFile("file", null, "image/png", png()), "Titolo", "");
+
+        assertEquals(255, truncated.originalFilename().length());
+        assertTrue(truncated.originalFilename().endsWith(".png"));
+        // MockMultipartFile turns a null name into "", so only the null-safe path for an empty name is observable
+        assertNotNull(unnamed.originalFilename());
+    }
+
+    @Test
+    void testUploadRejectsCorruptedImageOfKnownFormat() {
+        // Valid PNG signature followed by garbage: the format is recognised but metadata cannot be read
+        byte[] corrupted = {(byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n', 0, 0, 0, 1, 2, 3};
+        MockMultipartFile file = new MockMultipartFile("file", "broken.png", "image/png", corrupted);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> service.upload(file, "Titolo", "Descrizione"));
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Immagine non valida o non supportata", exception.getReason());
+        verifyNoInteractions(repository);
+    }
+
+    @Test
+    void testUploadRejectsImageAboveMaxPixels() {
+        // Header-only PNG declaring 10000x5000 pixels (50M > 40M limit)
+        MockMultipartFile file = new MockMultipartFile("file", "huge.png", "image/png", pngHeader(10_000, 5_000));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> service.upload(file, "Titolo", "Descrizione"));
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Immagine troppo grande", exception.getReason());
+        verifyNoInteractions(repository);
+    }
+
+    @Test
     void testUploadReportsStorageFailure() throws IOException {
         Path blockedPath = tempDir.resolve("not-a-directory");
         Files.writeString(blockedPath, "file");
@@ -266,6 +309,27 @@ class ImageServiceTest {
                 storageFilename, "PNG", "image/png", 2, 3, 4);
         asset.onCreate();
         return asset;
+    }
+
+    private static byte[] pngHeader(int width, int height) {
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        out.writeBytes(new byte[] {(byte) 0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n'});
+        java.nio.ByteBuffer ihdr = java.nio.ByteBuffer.allocate(13)
+                .putInt(width).putInt(height).put((byte) 8).put((byte) 2).put((byte) 0).put((byte) 0).put((byte) 0);
+        writeChunk(out, "IHDR", ihdr.array());
+        writeChunk(out, "IEND", new byte[0]);
+        return out.toByteArray();
+    }
+
+    private static void writeChunk(java.io.ByteArrayOutputStream out, String type, byte[] data) {
+        byte[] typeBytes = type.getBytes(java.nio.charset.StandardCharsets.US_ASCII);
+        java.util.zip.CRC32 crc = new java.util.zip.CRC32();
+        crc.update(typeBytes);
+        crc.update(data);
+        out.writeBytes(java.nio.ByteBuffer.allocate(4).putInt(data.length).array());
+        out.writeBytes(typeBytes);
+        out.writeBytes(data);
+        out.writeBytes(java.nio.ByteBuffer.allocate(4).putInt((int) crc.getValue()).array());
     }
 
     private byte[] png() throws IOException {

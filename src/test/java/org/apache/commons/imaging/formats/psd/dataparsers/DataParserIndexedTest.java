@@ -20,9 +20,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.awt.image.BufferedImage;
+
+import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.junit.jupiter.api.Test;
 
 class DataParserIndexedTest {
+
+    @Test
+    void testParseDataLooksUpColorTable() {
+        final byte[] colorModeData = new byte[768];
+        colorModeData[5] = 10; // red of palette entry 5
+        colorModeData[256 + 5] = 20; // green of palette entry 5
+        colorModeData[512 + 5] = 30; // blue of palette entry 5
+        final int[][][] data = { { { 5, 0 } } };
+        final PsdImageContents contents = new PsdImageContents(new PsdHeaderInfo(1, new byte[6], 1, 1, 2, 8, 2), 0, 0, 0, 0);
+        final BufferedImage image = new BufferedImage(2, 1, BufferedImage.TYPE_INT_RGB);
+
+        new DataParserIndexed(colorModeData).parseData(data, image, contents);
+
+        assertEquals(0xff0a141e, image.getRGB(0, 0));
+        assertEquals(0xff000000, image.getRGB(1, 0));
+    }
 
     @Test
     void testFailsToCreateDataParserIndexedThrowsArrayIndexOutOfBoundsException() {

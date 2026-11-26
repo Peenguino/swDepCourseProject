@@ -15,7 +15,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache.commons</groupId>
@@ -36,7 +38,8 @@
     <!-- WHILE IN ALPHA MODE ONLY, REMOVE FOR 1.0.0 -->
     <!-- ****************************************** -->
     <commons.japicmp.breakBuildOnBinaryIncompatibleModifications>false</commons.japicmp.breakBuildOnBinaryIncompatibleModifications>
-    <!-- *********************************************************************************************************************** -->
+    <!--
+    *********************************************************************************************************************** -->
     <argLine>-Xmx512m</argLine>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -46,7 +49,8 @@
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
     <commons.site.path>imaging</commons.site.path>
-    <!-- TODO: remove when we upgrade it to commons-parent 53 due to https://issues.apache.org/jira/browse/MNG-7316 -->
+    <!-- TODO: remove when we upgrade it to commons-parent 53 due to
+    https://issues.apache.org/jira/browse/MNG-7316 -->
     <commons.release-plugin.version>1.8.0</commons.release-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -58,7 +62,8 @@
     <commons.rc.version>RC1</commons.rc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/imaging</commons.distSvnStagingUrl>
-    <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
+    <!-- project.build.outputTimestamp is managed by Maven plugins, see
+    https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
     <project.build.outputTimestamp>2025-04-30T17:58:25Z</project.build.outputTimestamp>
     <!-- JaCoCo: Don't make code coverage worse than: -->
     <commons.jacoco.haltOnFailure>true</commons.jacoco.haltOnFailure>
@@ -159,6 +164,63 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
       </plugin>
+
+      <!-- JaCoCo Plugin for code coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.16</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>PACKAGE</element>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.75</minimum>
+                    </limit>
+                    <limit>
+                      <counter>CLASS</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.0</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
     </plugins>
     <pluginManagement>
       <plugins>
@@ -167,11 +229,12 @@
           <artifactId>maven-checkstyle-plugin</artifactId>
           <configuration>
             <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-            <!-- <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
+            <!--
+            <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation> -->
             <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
             <includeTestSourceDirectory>true</includeTestSourceDirectory>
             <enableRulesSummary>false</enableRulesSummary>
-           <excludes>target/**</excludes>
+            <excludes>target/**</excludes>
           </configuration>
         </plugin>
         <plugin>
@@ -200,6 +263,7 @@
               <inputExclude>src/main/resources/org/apache/commons/imaging/formats/xpm/rgb.txt</inputExclude>
               <inputExclude>.asf.yaml</inputExclude>
               <inputExclude>README.md</inputExclude>
+              <inputExclude>coverage-agent-context.md</inputExclude>
               <inputExclude>reports/**</inputExclude>
               <inputExclude>backend/**</inputExclude>
               <inputExclude>frontend/**</inputExclude>

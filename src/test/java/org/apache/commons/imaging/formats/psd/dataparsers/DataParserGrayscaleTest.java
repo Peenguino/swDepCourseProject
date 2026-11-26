@@ -18,6 +18,10 @@ package org.apache.commons.imaging.formats.psd.dataparsers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.image.BufferedImage;
+
+import org.apache.commons.imaging.formats.psd.PsdHeaderInfo;
+import org.apache.commons.imaging.formats.psd.PsdImageContents;
 import org.junit.jupiter.api.Test;
 
 class DataParserGrayscaleTest {
@@ -27,6 +31,18 @@ class DataParserGrayscaleTest {
         final DataParserGrayscale dataParserGrayscale = new DataParserGrayscale();
 
         assertEquals(1, dataParserGrayscale.getBasicChannelsCount());
+    }
+
+    @Test
+    void testParseDataReplicatesSampleToAllChannels() {
+        final int[][][] data = { { { 0, 128 } } };
+        final PsdImageContents contents = new PsdImageContents(new PsdHeaderInfo(1, new byte[6], 1, 1, 2, 8, 1), 0, 0, 0, 0);
+        final BufferedImage image = new BufferedImage(2, 1, BufferedImage.TYPE_INT_RGB);
+
+        new DataParserGrayscale().parseData(data, image, contents);
+
+        assertEquals(0xff000000, image.getRGB(0, 0));
+        assertEquals(0xff808080, image.getRGB(1, 0));
     }
 
 }
