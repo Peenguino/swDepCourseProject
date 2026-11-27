@@ -152,3 +152,140 @@ Configurazione: AverageTime, warm-up 5 x 1 s, misura 5 x 1 s, 3 fork -> 15 campi
 
 Dimensioni immagini usate (grezze -> PNG): RGB/ARGB 1024: 3 146 752 -> 2 782 234 B; GRAY 1024: 1 049 600 -> 933 778 B;
 RGB/ARGB 256: 196 864 -> 179 903 B; GRAY 256: 65 792 -> 59 822 B.
+
+# Fix H1-H3
+
+Commit di partenza: `b59fbc55` (S1). File modificati (solo `src/main`, sorgenti dei benchmark invariati):
+
+- **H1** `formats/png/PngWriter.java` (`writeImage`, entrambi i rami con e senza predictor): i byte filtrati vanno
+  in un `byte[]` allocato una volta con la dimensione esatta `height * (1 + width * samplesPerPixel)`
+  (`Allocator.byteArray(long)`, che rispetta il limite di allocazione della libreria) e riempito con un indice,
+  invece di `ByteArrayOutputStream.write(int)` per ogni byte. `samplesPerPixel`: 1 indicizzata; 1 grigio / 3 RGB, +1 con alpha.
+- **H2** `palette/PaletteFactory.java` (`hasTransparency`, `isGrayscale`): `getRGB(0, y, width, 1, row, 0, width)`
+  per riga invece di `getRGB(x, y)` per pixel; l'uscita anticipata e' invariata.
+- **H3** `formats/png/PngWriter.java` (`writeChunk`): CRC del chunk con `java.util.zip.CRC32` (stesso CRC-32 standard,
+  polinomio 0xEDB88320). `formats/png/PngCrc.java`: tabella `static final` calcolata una volta per classe
+  (prima ricalcolata a ogni `new PngCrc()`); `PngCrc` non e' piu' usata da `PngWriter` ma resta per la sua API.
+  Comportamento di `crc(buf, len)` (ignora `len`) invariato -> `PngCrcTest` passa.
+
+Nota su B3 in S2: il benchmark e' rimasto identico a S1. `pngCrcPerChunk` ora misura `PngCrc` con tabella statica
+(effetto della sola tabella), mentre `jdkCrc32` e' esattamente cio' che fa il nuovo `writeChunk`.
+
+### Verifiche (copia isolata)
+
+- `mvn clean verify`: **1679 test, 0 fallimenti, 0 errori, 7 skipped**; "All coverage checks have been met" (gate JaCoCo).
+- `mvn apache-rat:check pmd:check spotbugs:check`: BUILD SUCCESS, SpotBugs `BugInstance size is 0`.
+- `mvn checkstyle:check`: solo le 4 violazioni preesistenti (test Lab 4), nessuna nei file modificati.
+- **Output identico byte per byte** a S1: SHA-256 dei PNG scritti dal jar S1 (`~/.m2`) e dal codice corretto,
+  immagini 300x300, 9 percorsi del writer (rgb, argb opaca, argb traslucida, grigio, grigio+alpha,
+  predictor rgb/argb, indicizzata, indicizzata+alpha): 9/9 identici.
+  (Primo tentativo di `verify` fallito per RAT: avevo scritto i log nella radice della copia -> file senza licenza.)
+
+```bash
+# verifiche (VERIFY = copia isolata, log fuori dalla copia)
+rsync -a --exclude target --exclude .git --exclude frontend ./ $VERIFY/ && cd $VERIFY
+mvn clean verify
+mvn apache-rat:check pmd:check spotbugs:check
+mvn checkstyle:check
+```
+
+# S2 Dopo i fix (warm-up fisso)
+
+**Risultati:** [libreria (B1-B3) JSON](./S2/library.json) · [backend (B4) JSON](./S2/backend.json) ·
+log: [libreria](./S2/library.log), [backend](./S2/backend.log), [install](./S2/install.log) · [condizioni del run](./S2/run-info.txt)
+
+**Condizioni:** 27/11/2026 13:22-13:32 (~10 min), stessa macchina, stesso JDK, stessa configurazione JMH di S1,
+**a batteria, governor `powersave`** come S1 · codice = commit `b59fbc55` + fix H1-H3 (non committati al momento del run)
+· sorgenti dei benchmark identici a S1 · copia isolata, stessa procedura e stessi comandi di S1 (sezione "Comandi eseguiti").
+
+Delta = (S2 - S1) / S1: negativo = piu' veloce. Speedup = S1 / S2.
+Il confronto e' stato calcolato direttamente dai JSON di S1 e S2 (`primaryMetric.score` / `scoreError`).
+
+### B1 - `PngWriterBenchmark.writePng` (ms/op)
+
+| kind | size | S1 | S2 | delta | speedup |
+|---|---|---|---|---|---|
+| RGB | 256 | 6.727 ± 0.021 | 6.090 ± 0.042 | -9.5% | x1.10 |
+| RGB | 1024 | 112.407 ± 0.460 | 102.394 ± 0.778 | -8.9% | x1.10 |
+| ARGB_OPAQUE | 256 | 6.832 ± 0.014 | 6.312 ± 0.042 | -7.6% | x1.08 |
+| ARGB_OPAQUE | 1024 | 114.612 ± 0.462 | 105.148 ± 0.509 | -8.3% | x1.09 |
+| GRAY_CONTENT | 256 | 2.183 ± 0.005 | 1.987 ± 0.021 | -9.0% | x1.10 |
+| GRAY_CONTENT | 1024 | 37.702 ± 0.174 | 34.740 ± 0.384 | -7.9% | x1.09 |
+
+### B2 - `PaletteFactoryBenchmark` (us/op) - **regressione**
+
+| metodo | size | S1 | S2 | delta | speedup |
+|---|---|---|---|---|---|
+| hasTransparencyFullScan | 256 | 122.251 ± 0.943 | 167.357 ± 1.274 | **+36.9%** | x0.73 |
+| hasTransparencyFullScan | 1024 | 1943.551 ± 7.356 | 2720.597 ± 68.585 | **+40.0%** | x0.71 |
+| isGrayscaleFullScan | 256 | 122.931 ± 0.733 | 172.873 ± 2.917 | **+40.6%** | x0.71 |
+| isGrayscaleFullScan | 1024 | 1904.277 ± 12.357 | 2857.781 ± 137.302 | **+50.1%** | x0.67 |
+
+### B3 - `PngCrcBenchmark` (us/op)
+
+| metodo | length | S1 | S2 | delta |
+|---|---|---|---|---|
+| pngCrcPerChunk | 1 KiB | 3.102 ± 0.045 | 2.049 ± 0.006 | **-34.0%** |
+| pngCrcPerChunk | 64 KiB | 132.500 ± 0.898 | 131.587 ± 0.344 | -0.7% |
+| pngCrcPerChunk | 1 MiB | 2092.723 ± 3.852 | 2112.461 ± 6.066 | +0.9% |
+| jdkCrc32 (controllo, codice JDK invariato) | 1 KiB | 0.111 ± 0.000 | 0.112 ± 0.001 | +0.6% |
+| jdkCrc32 | 64 KiB | 4.146 ± 0.005 | 4.160 ± 0.019 | +0.3% |
+| jdkCrc32 | 1 MiB | 65.649 ± 0.621 | 65.608 ± 0.265 | -0.1% |
+
+### B4 - `ConvertToPngBenchmark.convertToPng` (ms/op)
+
+| size | S1 | S2 | delta | speedup |
+|---|---|---|---|---|
+| 256 | 7.553 ± 0.050 | 6.763 ± 0.053 | -10.4% | x1.12 |
+| 1024 | 123.763 ± 0.554 | 112.872 ± 1.039 | -8.8% | x1.10 |
+
+### Analisi S2
+
+**Validita' del confronto.** `jdkCrc32` misura codice del JDK che non e' cambiato tra S1 e S2: resta entro ±0.6%.
+La macchina era quindi nelle stesse condizioni nelle due sessioni (anche a batteria) e le differenze sugli altri
+benchmark sono attribuibili al codice. Unica nota: in S2 l'errore di B2 a 1024 e' piu' ampio (±68 / ±137 us, 2.5-5%),
+comunque molto inferiore alla variazione misurata (+40/+50%).
+
+**Esito per ipotesi**
+
+| Ipotesi | Esito | Evidenza |
+|---|---|---|
+| H1 buffer preallocato | **confermata** | residuo del guadagno su B1 dopo aver tolto H3 (vedi scomposizione): ~4.6 ms su RGB 1024 |
+| H2 `getRGB` per riga | **smentita** | B2 +37% / +50%; peggiora anche il totale di B1 dove la scansione avviene |
+| H3 `CRC32` del JDK | **confermata** | B3: `CRC32` ~32x piu' veloce di `PngCrc` sui buffer grandi; tabella statica: -34% su chunk da 1 KiB |
+
+**H2 smentita: perche'.** L'ipotesi era che il costo fosse il numero di chiamate (`getRGB(x, y)` per pixel).
+Nel JDK pero' `BufferedImage.getRGB(startX, startY, w, h, ...)` non e' un percorso diverso: per ogni pixel
+esegue comunque `raster.getDataElements(x, y, data)` + `colorModel.getRGB(data)`, cioe' le stesse operazioni
+della versione singola, piu' la scrittura in `row[]` e la rilettura. Il costo dominante e' quindi la conversione
+di colore per pixel, non la chiamata; la versione per pixel, interamente inlineata dal JIT nel chiamante,
+risulta piu' veloce della versione bulk. Conclusione: **la versione pre-fix di H2 (S1) e' migliore**.
+(Spiegazione dedotta dall'implementazione del JDK, non verificata con un profiler.)
+
+**Scomposizione del guadagno su B1 (1024).** Stime da B2/B3, non misure dirette:
+
+| kind | delta B1 | H3 (CRC) stimato | H2 (regressione) misurata in B2 | H1 = residuo |
+|---|---|---|---|---|
+| RGB | -10.0 ms | ~-5.4 ms (2.78 MB x 1.94 ns/B) | 0 (nessuna scansione: `TYPE_INT_RGB` senza alpha, `isGrayscale` esce al 1° pixel) | ~-4.6 ms |
+| ARGB_OPAQUE | -9.5 ms | ~-5.4 ms | +0.78 ms (`hasTransparency`) | ~-4.9 ms |
+| GRAY_CONTENT | -3.0 ms | ~-1.8 ms (0.93 MB) | +0.95 ms (`isGrayscale`) | ~-2.1 ms |
+
+H1 scala con il numero di byte scritti (~1.5 ns/byte: 3.1 MB per RGB, 1.05 MB per grigio): coerente.
+Senza la regressione di H2, ARGB_OPAQUE e GRAY_CONTENT avrebbero guadagnato ~0.8-1 ms in piu'.
+
+**Effetto sull'applicazione.** B4 a 1024 guadagna 10.9 ms (-8.8%), praticamente quanto B1 RGB (-10.0 ms):
+il miglioramento della libreria arriva intero al backend. Il ~90% rimanente del tempo e' `Deflater` (non toccato).
+
+**B3 nel dettaglio.** `pngCrcPerChunk` migliora solo sui chunk piccoli (-34% a 1 KiB), dove pesava la
+ricostruzione della tabella (~1 us); su 64 KiB e 1 MiB il costo e' il loop byte per byte e non cambia.
+Il guadagno vero di H3 in `PngWriter` viene dal passaggio a `CRC32` (ora usato da `writeChunk`), che B3 misura
+con `jdkCrc32`.
+
+## Stato delle versioni (per il report)
+
+- **S1 / pre-fix:** commit `b59fbc55` ("microbenchmarking: defining baseline, first session S1 of benchmarks").
+- **S2 / post-fix H1+H2+H3:** working tree dopo `b59fbc55` (`PngWriter.java`, `PaletteFactory.java`, `PngCrc.java`);
+  da committare per conservare la versione misurata in S2.
+- H2 resta nel codice di S2 cosi' com'e' (ipotesi smentita, documentata); la versione pre-fix migliore e' nel commit S1.
+- **Punto aperto per S3:** decidere se AMBER gira sul codice S2 cosi' com'e' (piano originale) o su S2 con H2 riportato
+  alla versione S1.

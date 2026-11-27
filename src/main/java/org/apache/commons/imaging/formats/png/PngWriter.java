@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.zip.CRC32;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
@@ -105,13 +106,15 @@ public class PngWriter {
             os.write(data);
         }
 
-        final PngCrc pngCrc = new PngCrc();
+        // The PNG chunk CRC is the standard CRC-32 (ISO 3309, polynomial 0xEDB88320), so the JDK CRC32 gives the same
+        // value as PngCrc; HotSpot compiles it to a hardware intrinsic instead of a byte-at-a-time table lookup.
+        final CRC32 crc32 = new CRC32();
+        crc32.update(chunkType.array, 0, chunkType.array.length);
+        if (data != null) {
+            crc32.update(data, 0, data.length);
+        }
 
-        final long crc1 = pngCrc.startPartialCrc(chunkType.array, chunkType.array.length);
-        final long crc2 = data == null ? crc1 : pngCrc.continuePartialCrc(crc1, data, data.length);
-        final int crc = (int) pngCrc.finishPartialCrc(crc2);
-
-        writeInt(os, crc);
+        writeInt(os, (int) crc32.getValue());
     }
 
     private void writeChunkIDAT(final OutputStream os, final byte[] bytes) throws IOException {
@@ -440,24 +443,34 @@ public class PngWriter {
             // spec. We may broaden the use of predictors in future versions.
             final boolean usePredictor = params.isPredictorEnabled() && !isGrayscale && palette == null;
 
+            // The filtered scanlines are written into a byte[] allocated once with its exact final size
+            // (one filter-type byte per row plus one byte per sample), instead of one synchronized
+            // ByteArrayOutputStream.write(int) call per byte on a buffer that keeps growing.
             final byte[] uncompressed;
             if (!usePredictor) {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
+
+                final int samplesPerPixel;
+                if (palette != null) {
+                    samplesPerPixel = 1;
+                } else {
+                    samplesPerPixel = (isGrayscale ? 1 : 3) + (useAlpha ? 1 : 0);
+                }
+                uncompressed = Allocator.byteArray((long) height * (1 + (long) width * samplesPerPixel));
+                int pos = 0;
 
                 final int[] row = Allocator.intArray(width);
                 for (int y = 0; y < height; y++) {
                     // Debug.debug("y", y + "/" + height);
                     src.getRGB(0, y, width, 1, row, 0, width);
 
-                    baos.write(FilterType.NONE.ordinal());
+                    uncompressed[pos++] = (byte) FilterType.NONE.ordinal();
                     for (int x = 0; x < width; x++) {
                         final int argb = row[x];
 
                         if (palette != null) {
                             final int index = palette.getPaletteIndex(argb);
-                            baos.write(0xff & index);
+                            uncompressed[pos++] = (byte) index;
                         } else {
                             final int alpha = 0xff & argb >> 24;
                             final int red = 0xff & argb >> 16;
@@ -478,23 +491,24 @@ public class PngWriter {
                                 // " " + Integer.toHexString(gray));
                                 // Debug.debug();
                                 // }
-                                baos.write(gray);
+                                uncompressed[pos++] = (byte) gray;
                             } else {
-                                baos.write(red);
-                                baos.write(green);
-                                baos.write(blue);
+                                uncompressed[pos++] = (byte) red;
+                                uncompressed[pos++] = (byte) green;
+                                uncompressed[pos++] = (byte) blue;
                             }
                             if (useAlpha) {
-                                baos.write(alpha);
+                                uncompressed[pos++] = (byte) alpha;
                             }
                         }
                     }
                 }
-                uncompressed = baos.toByteArray();
             } else {
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
                 final boolean useAlpha = pngColorType == PngColorType.GREYSCALE_WITH_ALPHA || pngColorType == PngColorType.TRUE_COLOR_WITH_ALPHA;
+
+                final int samplesPerPixel = useAlpha ? 4 : 3;
+                uncompressed = Allocator.byteArray((long) height * (1 + (long) width * samplesPerPixel));
+                int pos = 0;
 
                 final int[] row = Allocator.intArray(width);
                 for (int y = 0; y < height; y++) {
@@ -505,7 +519,7 @@ public class PngWriter {
                     int priorR = 0;
                     int priorG = 0;
                     int priorB = 0;
-                    baos.write(FilterType.SUB.ordinal());
+                    uncompressed[pos++] = (byte) FilterType.SUB.ordinal();
                     for (int x = 0; x < width; x++) {
                         final int argb = row[x];
                         final int alpha = 0xff & argb >> 24;
@@ -513,20 +527,19 @@ public class PngWriter {
                         final int green = 0xff & argb >> 8;
                         final int blue = 0xff & argb;
 
-                        baos.write(red - priorR);
-                        baos.write(green - priorG);
-                        baos.write(blue - priorB);
+                        uncompressed[pos++] = (byte) (red - priorR);
+                        uncompressed[pos++] = (byte) (green - priorG);
+                        uncompressed[pos++] = (byte) (blue - priorB);
                         priorR = red;
                         priorG = green;
                         priorB = blue;
 
                         if (useAlpha) {
-                            baos.write(alpha - priorA);
+                            uncompressed[pos++] = (byte) (alpha - priorA);
                             priorA = alpha;
                         }
                     }
                 }
-                uncompressed = baos.toByteArray();
             }
 
             // Debug.debug("uncompressed", uncompressed.length);

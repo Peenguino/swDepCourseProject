@@ -316,9 +316,12 @@ public class PaletteFactory {
             return false;
         }
 
+        // One bulk getRGB per row instead of one per pixel: same sRGB conversion, far fewer calls.
+        final int[] row = Allocator.intArray(width);
         for (int y = 0; y < height; y++) {
+            src.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
-                final int argb = src.getRGB(x, y);
+                final int argb = row[x];
                 final int alpha = 0xff & argb >> 24;
                 if (alpha < threshold) {
                     return true;
@@ -342,9 +345,12 @@ public class PaletteFactory {
             return true;
         }
 
+        // One bulk getRGB per row instead of one per pixel: same sRGB conversion, far fewer calls.
+        final int[] row = Allocator.intArray(width);
         for (int y = 0; y < height; y++) {
+            src.getRGB(0, y, width, 1, row, 0, width);
             for (int x = 0; x < width; x++) {
-                final int argb = src.getRGB(x, y);
+                final int argb = row[x];
 
                 final int red = 0xff & argb >> 16;
                 final int green = 0xff & argb >> 8;

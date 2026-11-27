@@ -19,11 +19,8 @@ package org.apache.commons.imaging.formats.png;
 // should just use ints, not longs
 final class PngCrc {
 
-    /* Table of CRCs of all 8-bit messages. */
-    private final long[] crcTable = new long[256];
-
-    /* Flag: has the table been computed? Initially false. */
-    private boolean crcTableComputed;
+    /* Table of CRCs of all 8-bit messages, computed once per class instead of once per instance. */
+    private static final long[] CRC_TABLE = makeCrcTable();
 
     public long continuePartialCrc(final long oldCrc, final byte[] buf, final int len) {
         return updateCrc(oldCrc, buf);
@@ -44,7 +41,8 @@ final class PngCrc {
     }
 
     /* Make the table for a fast CRC. */
-    private void makeCrcTable() {
+    private static long[] makeCrcTable() {
+        final long[] crcTable = new long[256];
         long c;
         int n;
         int k;
@@ -60,7 +58,7 @@ final class PngCrc {
             }
             crcTable[n] = c;
         }
-        crcTableComputed = true;
+        return crcTable;
     }
 
     public long startPartialCrc(final byte[] buf, final int len) {
@@ -71,14 +69,11 @@ final class PngCrc {
         long c = crc;
         int n;
 
-        if (!crcTableComputed) {
-            makeCrcTable();
-        }
         for (n = 0; n < buf.length; n++) {
             // Debug.debug("crc[" + n + "]", c + " (" + Long.toHexString(c) +
             // ")");
 
-            c = crcTable[(int) ((c ^ buf[n]) & 0xff)] ^ c >> 8;
+            c = CRC_TABLE[(int) ((c ^ buf[n]) & 0xff)] ^ c >> 8;
         }
         return c;
     }
