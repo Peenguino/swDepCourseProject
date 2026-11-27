@@ -1,0 +1,205 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24654 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ---------------------< it.course:imaging-backend >----------------------
+[INFO] Building imaging-backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ imaging-backend ---
+[INFO] 
+[INFO] --- jacoco:0.8.16:prepare-agent (default) @ imaging-backend ---
+[INFO] argLine set to -javaagent:/home/peenguino/.m2/repository/org/jacoco/org.jacoco.agent/0.8.16/org.jacoco.agent-0.8.16-runtime.jar=destfile=/tmp/claude-1000/-home-peenguino-swDepCourseProject/19fa8319-3e68-497b-965c-d57edb12238d/scratchpad/bench-run/backend/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ imaging-backend ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ imaging-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 8 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ imaging-backend ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ imaging-backend ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 5 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ imaging-backend ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- exec:3.6.4:exec (benchmark) @ imaging-backend ---
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 27.0.1.1, OpenJDK 64-Bit Server VM, 27.0.1.1
+# VM invoker: /usr/lib/jvm/java-27-openjdk/bin/java
+# VM options: <none>
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng
+# Parameters: (size = 256)
+
+# Run progress: 0.00% complete, ETA 00:01:00
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 8.479 ms/op
+# Warmup Iteration   2: 7.736 ms/op
+# Warmup Iteration   3: 7.696 ms/op
+# Warmup Iteration   4: 7.589 ms/op
+# Warmup Iteration   5: 7.558 ms/op
+Iteration   1: 7.646 ms/op
+Iteration   2: 7.578 ms/op
+Iteration   3: 7.487 ms/op
+Iteration   4: 7.625 ms/op
+Iteration   5: 7.537 ms/op
+
+# Run progress: 16.67% complete, ETA 00:00:52
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 8.475 ms/op
+# Warmup Iteration   2: 7.706 ms/op
+# Warmup Iteration   3: 7.584 ms/op
+# Warmup Iteration   4: 7.559 ms/op
+# Warmup Iteration   5: 7.484 ms/op
+Iteration   1: 7.526 ms/op
+Iteration   2: 7.502 ms/op
+Iteration   3: 7.509 ms/op
+Iteration   4: 7.510 ms/op
+Iteration   5: 7.523 ms/op
+
+# Run progress: 33.33% complete, ETA 00:00:41
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 8.756 ms/op
+# Warmup Iteration   2: 7.771 ms/op
+# Warmup Iteration   3: 7.691 ms/op
+# Warmup Iteration   4: 7.612 ms/op
+# Warmup Iteration   5: 7.629 ms/op
+Iteration   1: 7.595 ms/op
+Iteration   2: 7.568 ms/op
+Iteration   3: 7.584 ms/op
+Iteration   4: 7.558 ms/op
+Iteration   5: 7.541 ms/op
+
+
+Result "it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng":
+  7.553 ±(99.9%) 0.050 ms/op [Average]
+  (min, avg, max) = (7.487, 7.553, 7.646), stdev = 0.046
+  CI (99.9%): [7.503, 7.602] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 27.0.1.1, OpenJDK 64-Bit Server VM, 27.0.1.1
+# VM invoker: /usr/lib/jvm/java-27-openjdk/bin/java
+# VM options: <none>
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 1 s each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng
+# Parameters: (size = 1024)
+
+# Run progress: 50.00% complete, ETA 00:00:31
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 147.941 ms/op
+# Warmup Iteration   2: 124.554 ms/op
+# Warmup Iteration   3: 124.208 ms/op
+# Warmup Iteration   4: 123.981 ms/op
+# Warmup Iteration   5: 123.372 ms/op
+Iteration   1: 123.198 ms/op
+Iteration   2: 123.268 ms/op
+Iteration   3: 123.297 ms/op
+Iteration   4: 125.299 ms/op
+Iteration   5: 123.343 ms/op
+
+# Run progress: 66.67% complete, ETA 00:00:21
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 143.871 ms/op
+# Warmup Iteration   2: 123.965 ms/op
+# Warmup Iteration   3: 123.775 ms/op
+# Warmup Iteration   4: 124.052 ms/op
+# Warmup Iteration   5: 123.754 ms/op
+Iteration   1: 123.728 ms/op
+Iteration   2: 123.645 ms/op
+Iteration   3: 123.746 ms/op
+Iteration   4: 123.777 ms/op
+Iteration   5: 124.210 ms/op
+
+# Run progress: 83.33% complete, ETA 00:00:10
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 145.723 ms/op
+# Warmup Iteration   2: 125.005 ms/op
+# Warmup Iteration   3: 124.301 ms/op
+# Warmup Iteration   4: 123.329 ms/op
+# Warmup Iteration   5: 123.602 ms/op
+Iteration   1: 124.013 ms/op
+Iteration   2: 123.950 ms/op
+Iteration   3: 123.403 ms/op
+Iteration   4: 123.742 ms/op
+Iteration   5: 123.829 ms/op
+
+
+Result "it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng":
+  123.763 ±(99.9%) 0.554 ms/op [Average]
+  (min, avg, max) = (123.198, 123.763, 125.299), stdev = 0.519
+  CI (99.9%): [123.209, 124.318] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:01:05
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                           (size)  Mode  Cnt    Score   Error  Units
+ConvertToPngBenchmark.convertToPng     256  avgt   15    7.553 ± 0.050  ms/op
+ConvertToPngBenchmark.convertToPng    1024  avgt   15  123.763 ± 0.554  ms/op
+
+Benchmark result is saved to target/jmh-result.it.course.imaging.json
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:09 min
+[INFO] Finished at: 2026-11-27T13:03:37+01:00
+[INFO] ------------------------------------------------------------------------
