@@ -4,6 +4,7 @@
 
 - [Lab 1 - Continuous Integration & Continuous Delivery](./reports/CICD.md)
 - [Lab 2 - Containerization](./reports/Docker.md)
+- [Lab 3 - Writing Test Cases with JUnit and Mockito](./reports/testing.md)
 - [Lab 5 - Formal Verification with JML and OpenJML](./reports/verification.md)
 
 ## Commons Imaging Gallery - Demo
