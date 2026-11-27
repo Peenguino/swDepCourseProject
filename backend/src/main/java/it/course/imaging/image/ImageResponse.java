@@ -13,8 +13,9 @@ public record ImageResponse(
         int width,
         int height,
         long sizeBytes,
-        Instant createdAt,
-        Instant updatedAt) {
+        // JML: null until JPA persists the entity (OpenJML treats unannotated references as non_null)
+        /*@ nullable @*/ Instant createdAt,
+        /*@ nullable @*/ Instant updatedAt) {
 
     static ImageResponse from(ImageAsset asset) {
         return new ImageResponse(

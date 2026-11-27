@@ -30,6 +30,9 @@ public class ImagingRuntimeException extends RuntimeException {
      *
      * @param message The detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
      */
+    /*@ public normal_behavior
+      @ pure
+      @*/
     public ImagingRuntimeException(final String message) {
         super(message);
     }
@@ -44,6 +47,9 @@ public class ImagingRuntimeException extends RuntimeException {
      * @param cause   The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                the cause is nonexistent or unknown.)
      */
+    /*@ public normal_behavior
+      @ pure
+      @*/
     public ImagingRuntimeException(final String message, final Throwable cause) {
         super(message, cause);
     }

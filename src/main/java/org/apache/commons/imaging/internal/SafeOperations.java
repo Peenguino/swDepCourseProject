@@ -31,7 +31,25 @@ public final class SafeOperations {
      * @param values variable length array of integers.
      * @return The values safely added.
      */
-    public static int add(final int... values) {
+    /*@ public normal_behavior
+      @   requires values != null && values.length >= 2;
+      @   // Math::addExact fails as soon as a partial sum overflows, even when the total would fit in an int.
+      @   requires (\forall int k; 1 <= k && k <= values.length;
+      @               Integer.MIN_VALUE <= (\sum int j; 0 <= j && j < k; (\bigint) values[j])
+      @            && (\sum int j; 0 <= j && j < k; (\bigint) values[j]) <= Integer.MAX_VALUE);
+      @   ensures \result == (\sum int j; 0 <= j && j < values.length; (\bigint) values[j]);
+      @ also public exceptional_behavior
+      @   requires values == null || values.length < 2;
+      @   signals_only IllegalArgumentException;
+      @ also public exceptional_behavior
+      @   requires values != null && values.length >= 2;
+      @   requires (\exists int k; 1 <= k && k <= values.length;
+      @               (\sum int j; 0 <= j && j < k; (\bigint) values[j]) < Integer.MIN_VALUE
+      @            || (\sum int j; 0 <= j && j < k; (\bigint) values[j]) > Integer.MAX_VALUE);
+      @   signals_only ArithmeticException;
+      @ pure
+      @*/
+    public static int add(final int /*@ nullable @*/ ... values) {
         if (values == null || values.length < 2) {
             throw new IllegalArgumentException("You must provide at least two elements to be added");
         }

@@ -1,0 +1,60 @@
+Proving methods in org.apache.commons.imaging.palette.SimplePalette
+Starting proof of org.apache.commons.imaging.palette.SimplePalette.SimplePalette(int @Nullable []) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:47: verify: The prover cannot establish an assertion (ExceptionList: src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:43:) in method SimplePalette
+        final int[] checked = Objects.requireNonNull(palette, "palette");
+                                                    ^
+src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:43: verify: Associated declaration: src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:47:
+      @   signals_only NullPointerException;
+          ^
+Completed proof of org.apache.commons.imaging.palette.SimplePalette.SimplePalette(int @Nullable []) with prover z3-5.1.0 - with warnings [1.74 secs]
+Starting proof of org.apache.commons.imaging.palette.SimplePalette.getEntry(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:58: verify: The prover cannot establish an assertion (PossiblyTooLargeIndex) in method getEntry
+        return palette[index];
+                      ^
+src/main/java/org/apache/commons/imaging/palette/SimplePalette.java:58: verify: The prover cannot establish an assertion (PossiblyNegativeIndex) in method getEntry
+        return palette[index];
+                      ^
+Completed proof of org.apache.commons.imaging.palette.SimplePalette.getEntry(int) with prover z3-5.1.0 - with warnings [0.68 secs]
+Starting proof of org.apache.commons.imaging.palette.SimplePalette.getPaletteIndex(int) with prover z3-5.1.0
+Method assertions are validated [0.04 secs]
+Completed proof of org.apache.commons.imaging.palette.SimplePalette.getPaletteIndex(int) with prover z3-5.1.0 - no warnings [0.06 secs]
+Starting proof of org.apache.commons.imaging.palette.SimplePalette.length() with prover z3-5.1.0
+Method assertions are validated [0.03 secs]
+Completed proof of org.apache.commons.imaging.palette.SimplePalette.length() with prover z3-5.1.0 - no warnings [0.04 secs]
+Completed proving methods in org.apache.commons.imaging.palette.SimplePalette [2.55 secs]
+Proving methods in org.apache.commons.imaging.palette.Palette
+Skipping proof of org.apache.commons.imaging.palette.Palette.getEntry(int) (because the method has no body)
+Skipping proof of org.apache.commons.imaging.palette.Palette.getPaletteIndex(int) (because the method has no body)
+Skipping proof of org.apache.commons.imaging.palette.Palette.length() (because the method has no body)
+Completed proving methods in org.apache.commons.imaging.palette.Palette [0.00 secs]
+Proving methods in org.apache.commons.imaging.ImagingException
+Starting proof of org.apache.commons.imaging.ImagingException.ImagingException(String) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.ImagingException.ImagingException(String) with prover z3-5.1.0 - no warnings [0.07 secs]
+Starting proof of org.apache.commons.imaging.ImagingException.ImagingException(String,Object) with prover z3-5.1.0
+Method assertions are validated [0.18 secs]
+Completed proof of org.apache.commons.imaging.ImagingException.ImagingException(String,Object) with prover z3-5.1.0 - no warnings [0.28 secs]
+Starting proof of org.apache.commons.imaging.ImagingException.ImagingException(String,Throwable) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.ImagingException.ImagingException(String,Throwable) with prover z3-5.1.0 - no warnings [0.08 secs]
+Starting proof of org.apache.commons.imaging.ImagingException.ImagingException(Throwable) with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of org.apache.commons.imaging.ImagingException.ImagingException(Throwable) with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of org.apache.commons.imaging.ImagingException.getType(Object) with prover z3-5.1.0
+Method assertions are validated [2.66 secs]
+Completed proof of org.apache.commons.imaging.ImagingException.getType(Object) with prover z3-5.1.0 - no warnings [2.83 secs]
+Completed proving methods in org.apache.commons.imaging.ImagingException [3.36 secs]
+Summary:
+  Valid:        7
+  Invalid:      2
+  Infeasible:   0
+  Timeout:      0
+  Error:        0
+  Skipped:      3
+ TOTAL METHODS: 12
+ Classes:       1 proved of 3
+ DURATION:          6.5 secs
+
+4 verification failures

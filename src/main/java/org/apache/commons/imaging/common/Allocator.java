@@ -30,7 +30,7 @@ public final class Allocator {
 
     /** One GB. */
     private static final int DEFAULT = 1_073_741_824;
-    private static final int LIMIT;
+    private static final /*@ spec_public @*/ int LIMIT;
 
     static {
         LIMIT = Integer.getInteger(CANONICAL_NAME, DEFAULT);
@@ -88,6 +88,13 @@ public final class Allocator {
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
+    /*@ public normal_behavior
+      @   requires 0 <= request && request <= LIMIT;
+      @   ensures \fresh(\result) && \result.length == request;
+      @ also public exceptional_behavior
+      @   requires request > LIMIT;
+      @   signals_only AllocationRequestException;
+      @*/
     public static byte[] byteArray(final int request) {
         return new byte[checkByteArray(request)];
     }
@@ -100,6 +107,13 @@ public final class Allocator {
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
+    /*@ public normal_behavior
+      @   requires 0 <= request && request <= LIMIT;
+      @   ensures \fresh(\result) && \result.length == request;
+      @ also public exceptional_behavior
+      @   requires request > LIMIT;
+      @   signals_only AllocationRequestException;
+      @*/
     public static byte[] byteArray(final long request) {
         return new byte[check(request, Byte.BYTES)];
     }
@@ -126,6 +140,14 @@ public final class Allocator {
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
+    /*@ public normal_behavior
+      @   requires request <= LIMIT;
+      @   ensures \result == request;
+      @ also public exceptional_behavior
+      @   requires request > LIMIT;
+      @   signals_only AllocationRequestException;
+      @ pure
+      @*/
     public static int check(final int request) {
         if (request > LIMIT) {
             throw new AllocationRequestException(LIMIT, request);
@@ -144,6 +166,15 @@ public final class Allocator {
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
+    /*@ public normal_behavior
+      @   // the product of two ints always fits in a long, so the (long) cast states the "mathematical" size
+      @   requires Integer.MIN_VALUE <= (long) request * elementSize && (long) request * elementSize <= LIMIT;
+      @   ensures \result == request;
+      @ also public exceptional_behavior
+      @   requires (long) request * elementSize < Integer.MIN_VALUE || (long) request * elementSize > LIMIT;
+      @   signals_only AllocationRequestException;
+      @ pure
+      @*/
     public static int check(final int request, final int elementSize) {
         final int multiplyExact;
         try {
@@ -168,6 +199,16 @@ public final class Allocator {
      * @return The request.
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      */
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= request && request <= Integer.MAX_VALUE;
+      @   requires Integer.MIN_VALUE <= request * elementSize && request * elementSize <= LIMIT;
+      @   ensures \result == request;
+      @ also public exceptional_behavior
+      @   requires request < Integer.MIN_VALUE || request > Integer.MAX_VALUE
+      @         || request * elementSize < Integer.MIN_VALUE || request * elementSize > LIMIT;
+      @   signals_only AllocationRequestException;
+      @ pure
+      @*/
     public static int check(final long request, final int elementSize) {
         try {
             return check(Math.toIntExact(request), elementSize);
@@ -182,6 +223,14 @@ public final class Allocator {
      * @param request The byte array size.
      * @return The input request.
      */
+    /*@ public normal_behavior
+      @   requires request <= LIMIT;
+      @   ensures \result == request;
+      @ also public exceptional_behavior
+      @   requires request > LIMIT;
+      @   signals_only AllocationRequestException;
+      @ pure
+      @*/
     public static int checkByteArray(final int request) {
         return check(request, Byte.BYTES);
     }
@@ -218,6 +267,13 @@ public final class Allocator {
      * @throws AllocationRequestException Thrown when the request exceeds the limit.
      * @see #check(int, int)
      */
+    /*@ public normal_behavior
+      @   requires 0 <= request && (long) request * Integer.BYTES <= LIMIT;
+      @   ensures \fresh(\result) && \result.length == request;
+      @ also public exceptional_behavior
+      @   requires (long) request * Integer.BYTES > LIMIT;
+      @   signals_only AllocationRequestException;
+      @*/
     public static int[] intArray(final int request) {
         return new int[check(request, Integer.BYTES)];
     }

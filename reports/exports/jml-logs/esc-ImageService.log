@@ -1,0 +1,615 @@
+Proving methods in it.course.imaging.image.ImageService
+Starting proof of it.course.imaging.image.ImageService.ImageService(it.course.imaging.image.ImageAssetRepository,String) with prover z3-5.1.0
+Method assertions are validated [0.20 secs]
+Completed proof of it.course.imaging.image.ImageService.ImageService(it.course.imaging.image.ImageAssetRepository,String) with prover z3-5.1.0 - no warnings [0.39 secs]
+Starting proof of it.course.imaging.image.ImageService.content(java.util.UUID) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method content
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+Note: Call stack
+  backend/src/main/java/it/course/imaging/image/ImageService.java:215: java.util.UUID.equals
+  backend/src/main/java/it/course/imaging/image/ImageService.java:184: it.course.imaging.image.ImageService.getAsset
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:60:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:60: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant mediaType.length() <= 100;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:56:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:56: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant title.length() <= 120;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:189: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:58:) in method content: (Caller: it.course.imaging.image.ImageService.content(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getOriginalFilename())
+        return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
+                                                                   ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:58: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:189:
+    //@ public invariant originalFilename.length() <= 255;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:183: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    public ImageContent content(UUID id) {
+                        ^
+Completed proof of it.course.imaging.image.ImageService.content(java.util.UUID) with prover z3-5.1.0 - with warnings [691.83 secs]
+Starting proof of it.course.imaging.image.ImageService.convertToPng(java.util.UUID) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method convertToPng
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+Note: Call stack
+  backend/src/main/java/it/course/imaging/image/ImageService.java:215: java.util.UUID.equals
+  backend/src/main/java/it/course/imaging/image/ImageService.java:199: it.course.imaging.image.ImageService.getAsset
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method convertToPng: (Caller: it.course.imaging.image.ImageService.convertToPng(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getTitle())
+            return new PngImage(output, asset.getTitle() + ".png");
+                                                      ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method convertToPng: (Caller: it.course.imaging.image.ImageService.convertToPng(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getTitle())
+            return new PngImage(output, asset.getTitle() + ".png");
+                                                      ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method convertToPng: (Caller: it.course.imaging.image.ImageService.convertToPng(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getTitle())
+            return new PngImage(output, asset.getTitle() + ".png");
+                                                      ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (Postcondition: backend/src/main/java/it/course/imaging/image/ImageService.java:194:) in method convertToPng
+            return new PngImage(output, asset.getTitle() + ".png");
+            ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:194: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+      @   ensures \result != null && \result.bytes().length > 0;
+          ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (Postcondition: backend/src/main/java/it/course/imaging/image/ImageService.java:195:) in method convertToPng
+            return new PngImage(output, asset.getTitle() + ".png");
+            ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:195: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+      @   ensures \result.filename().endsWith(".png");
+          ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:204: verify: The prover cannot establish an assertion (InvariantEntrance: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method convertToPng: (Caller: it.course.imaging.image.ImageService.convertToPng(java.util.UUID), Callee: it.course.imaging.image.ImageAsset.getTitle())
+            return new PngImage(output, asset.getTitle() + ".png");
+                                                      ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:204:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:198: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    public PngImage convertToPng(UUID id) {
+                    ^
+Completed proof of it.course.imaging.image.ImageService.convertToPng(java.util.UUID) with prover z3-5.1.0 - with warnings [482.89 secs]
+Starting proof of it.course.imaging.image.ImageService.createStorageDirectory() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageService.createStorageDirectory() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageService.delete(java.util.UUID) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method delete
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+Note: Call stack
+  backend/src/main/java/it/course/imaging/image/ImageService.java:215: java.util.UUID.equals
+  backend/src/main/java/it/course/imaging/image/ImageService.java:173: it.course.imaging.image.ImageService.getAsset
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+Completed proof of it.course.imaging.image.ImageService.delete(java.util.UUID) with prover z3-5.1.0 - with warnings [5.22 secs]
+Starting proof of it.course.imaging.image.ImageService.deleteQuietly(java.nio.file.Path) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of it.course.imaging.image.ImageService.deleteQuietly(java.nio.file.Path) with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageService.findAll() with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:73: verify: The prover cannot establish an assertion (PossiblyNullReturn: backend/src/main/java/it/course/imaging/image/ImageService.java:73:) in method findAll
+    public List<ImageResponse> findAll() {
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:73: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:73:
+    public List<ImageResponse> findAll() {
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:74: verify: Associated method exit
+        return repository.findAllByOrderByCreatedAtDesc().stream().map(ImageResponse::from).toList();
+        ^
+Completed proof of it.course.imaging.image.ImageService.findAll() with prover z3-5.1.0 - with warnings [3.62 secs]
+Starting proof of it.course.imaging.image.ImageService.findById(java.util.UUID) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method findById
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+Note: Call stack
+  backend/src/main/java/it/course/imaging/image/ImageService.java:215: java.util.UUID.equals
+  backend/src/main/java/it/course/imaging/image/ImageService.java:83: it.course.imaging.image.ImageService.getAsset
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:79: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method findById
+      @   ensures \result != null && \result.id().equals(id);
+                                                        ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:79:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+Completed proof of it.course.imaging.image.ImageService.findById(java.util.UUID) with prover z3-5.1.0 - with warnings [9.06 secs]
+Starting proof of it.course.imaging.image.ImageService.getAsset(java.util.UUID) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method getAsset
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:56:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:56: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant title.length() <= 120;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:60:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:60: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant mediaType.length() <= 100;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:219: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:58:) in method getAsset: it.course.imaging.image.ImageService.getAsset(java.util.UUID) (for result type)
+        return repository.findById(id).orElseThrow(
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:58: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:219:
+    //@ public invariant originalFilename.length() <= 255;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:218: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    private ImageAsset getAsset(UUID id) {
+                       ^
+Completed proof of it.course.imaging.image.ImageService.getAsset(java.util.UUID) with prover z3-5.1.0 - with warnings [553.93 secs]
+Proving methods in it.course.imaging.image.ImageService.ImageContent
+Completed proving methods in it.course.imaging.image.ImageService.ImageContent [0.00 secs]
+Starting proof of it.course.imaging.image.ImageService.isNotBlank(String) with prover z3-5.1.0
+error: An error while executing a proof script for isNotBlank: (error "line 676 column 105: unknown constant i")
+  >>>(define-fun BL_1656_AfterLabel_21__A3 () Bool (= |`result_1656_1689___15| |_JML__tmp`35|))
+Completed proof of it.course.imaging.image.ImageService.isNotBlank(String) with prover z3-5.1.0 - ERROR [0.12 secs]
+Starting proof of it.course.imaging.image.ImageService.isTrimmed(String) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of it.course.imaging.image.ImageService.isTrimmed(String) with prover z3-5.1.0 - no warnings [0.09 secs]
+Proving methods in it.course.imaging.image.ImageService.PngImage
+Completed proving methods in it.course.imaging.image.ImageService.PngImage [0.00 secs]
+Starting proof of it.course.imaging.image.ImageService.update(java.util.UUID,it.course.imaging.image.UpdateImageRequest) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:215: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method update
+      @   ensures \result != null && \result.getId().equals(id);
+                                                           ^
+Note: Call stack
+  backend/src/main/java/it/course/imaging/image/ImageService.java:215: java.util.UUID.equals
+  backend/src/main/java/it/course/imaging/image/ImageService.java:162: it.course.imaging.image.ImageService.getAsset
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:215:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:153: verify: The prover cannot establish an assertion (UndefinedCalledMethodPrecondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:107:) in method update
+      @   ensures \result != null && \result.id().equals(id);
+                                                        ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:153:
+      @     requires obj == null;
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:97: verify: Precondition conjunct is false: this == obj
+      @     requires this == obj;
+                          ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:102: verify: Precondition conjunct is false: \typeof(this) == \type(Object)
+      @     requires obj != null && \typeof(this) == \type(Object);
+                                                  ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:107: verify: Precondition conjunct is false: obj == null
+      @     requires obj == null;
+                         ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:165: verify: The prover cannot establish an assertion (Postcondition: backend/src/main/java/it/course/imaging/image/ImageService.java:154:) in method update
+        return ImageResponse.from(repository.save(asset));
+        ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:154: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:165:
+      @   ensures isNotBlank(\result.title()) && isTrimmed(\result.title());
+          ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:165: verify: The prover cannot establish an assertion (Postcondition: backend/src/main/java/it/course/imaging/image/ImageService.java:155:) in method update
+        return ImageResponse.from(repository.save(asset));
+        ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:155: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:165:
+      @   ensures \result.title().length() <= request.title().length();
+          ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:165: verify: The prover cannot establish an assertion (Postcondition: backend/src/main/java/it/course/imaging/image/ImageService.java:157:) in method update
+        return ImageResponse.from(repository.save(asset));
+        ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:157: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageService.java:165:
+      @   ensures request.description() != null ==> isTrimmed(\result.description())
+          ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:161: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    public ImageResponse update(UUID id, UpdateImageRequest request) {
+                         ^
+Completed proof of it.course.imaging.image.ImageService.update(java.util.UUID,it.course.imaging.image.UpdateImageRequest) with prover z3-5.1.0 - with warnings [407.49 secs]
+Starting proof of it.course.imaging.image.ImageService.upload(org.springframework.web.multipart.MultipartFile,String,String) with prover z3-5.1.0
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+backend/src/main/java/it/course/imaging/image/ImageService.java:37: warning: INTERNAL ERROR: finally stack is unexpectedly empty
+    private final /*@ spec_public @*/ Path storageDir;
+                                           ^
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageService.java:100: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    public ImageResponse upload(MultipartFile file, String title, String description) {
+                         ^
+Completed proof of it.course.imaging.image.ImageService.upload(org.springframework.web.multipart.MultipartFile,String,String) with prover z3-5.1.0 - TIMEOUT [301.37 secs]
+Completed proving methods in it.course.imaging.image.ImageService [2456.26 secs]
+Proving methods in it.course.imaging.image.ImageAssetRepository
+Skipping proof of it.course.imaging.image.ImageAssetRepository.findAllByOrderByCreatedAtDesc() (because the method has no body)
+Completed proving methods in it.course.imaging.image.ImageAssetRepository [0.00 secs]
+Proving methods in it.course.imaging.image.ImageAsset
+Starting proof of it.course.imaging.image.ImageAsset.ImageAsset() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method ImageAsset
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+Completed proof of it.course.imaging.image.ImageAsset.ImageAsset() with prover z3-5.1.0 - with warnings [0.75 secs]
+Starting proof of it.course.imaging.image.ImageAsset.ImageAsset(java.util.UUID,String,String,String,String,String,String,int,int,long) with prover z3-5.1.0
+Method assertions are validated [0.06 secs]
+Completed proof of it.course.imaging.image.ImageAsset.ImageAsset(java.util.UUID,String,String,String,String,String,String,int,int,long) with prover z3-5.1.0 - no warnings [0.08 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getCreatedAt() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getCreatedAt() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getDescription() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getDescription() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getFormat() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getFormat() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getHeight() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getHeight() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getId() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getId() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getMediaType() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getMediaType() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getOriginalFilename() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getOriginalFilename() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getSizeBytes() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getSizeBytes() with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getStorageFilename() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getStorageFilename() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getTitle() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getTitle() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getUpdatedAt() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getUpdatedAt() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getWidth() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getWidth() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of it.course.imaging.image.ImageAsset.onCreate() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (Assignable: backend/src/main/java/it/course/imaging/image/ImageAsset.java:94:) in method onCreate: \everything
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:94: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+      @   assignable createdAt, updatedAt;
+          ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:36: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String mediaType;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:21: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String title;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:27: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String originalFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:30: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String storageFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:33: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String format;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:24: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String description;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (ExceptionalPostcondition: backend/src/main/java/it/course/imaging/image/ImageAsset.java:93:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:93: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    /*@ normal_behavior
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    void onCreate() {
+         ^
+Completed proof of it.course.imaging.image.ImageAsset.onCreate() with prover z3-5.1.0 - with warnings [331.45 secs]
+Starting proof of it.course.imaging.image.ImageAsset.onUpdate() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (ExceptionalPostcondition: backend/src/main/java/it/course/imaging/image/ImageAsset.java:103:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:103: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    /*@ normal_behavior
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (Assignable: backend/src/main/java/it/course/imaging/image/ImageAsset.java:105:) in method onUpdate: \everything
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:105: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+      @   assignable updatedAt;
+          ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:36: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String mediaType;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:33: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String format;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:27: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String originalFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:24: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String description;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:21: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String title;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:30: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String storageFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:109: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method onUpdate
+    void onUpdate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:109:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:109: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method onUpdate
+    void onUpdate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:109:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:56:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:56: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant title.length() <= 120;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:60:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:60: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant mediaType.length() <= 100;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:109: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    void onUpdate() {
+         ^
+Completed proof of it.course.imaging.image.ImageAsset.onUpdate() with prover z3-5.1.0 - with warnings [475.77 secs]
+Starting proof of it.course.imaging.image.ImageAsset.setDescription(String) with prover z3-5.1.0
+Method assertions are validated [0.09 secs]
+Completed proof of it.course.imaging.image.ImageAsset.setDescription(String) with prover z3-5.1.0 - no warnings [0.11 secs]
+Starting proof of it.course.imaging.image.ImageAsset.setTitle(String) with prover z3-5.1.0
+Method assertions are validated [0.09 secs]
+Completed proof of it.course.imaging.image.ImageAsset.setTitle(String) with prover z3-5.1.0 - no warnings [0.11 secs]
+Completed proving methods in it.course.imaging.image.ImageAsset [809.39 secs]
+Proving methods in it.course.imaging.image.ImageResponse
+Starting proof of it.course.imaging.image.ImageResponse.from(it.course.imaging.image.ImageAsset) with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageResponse.java:20: verify: The prover cannot establish an assertion (Precondition: backend/src/main/java/it/course/imaging/image/ImageResponse.java:6:) in method from
+        return new ImageResponse(
+               ^
+backend/src/main/java/it/course/imaging/image/ImageResponse.java:6: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageResponse.java:20:
+public record ImageResponse(
+       ^
+backend/src/main/java/it/course/imaging/image/ImageResponse.java:23: verify: Precondition conjunct is false: _JML__tmp`1023 != null
+                asset.getSizeBytes(), asset.getCreatedAt(), asset.getUpdatedAt());
+                                                        ^
+Completed proof of it.course.imaging.image.ImageResponse.from(it.course.imaging.image.ImageAsset) with prover z3-5.1.0 - with warnings [9.38 secs]
+Completed proving methods in it.course.imaging.image.ImageResponse [9.38 secs]
+Proving methods in it.course.imaging.image.UpdateImageRequest
+Completed proving methods in it.course.imaging.image.UpdateImageRequest [0.00 secs]
+Summary:
+  Valid:        19
+  Invalid:      11
+  Infeasible:   0
+  Timeout:      1
+  Error:        1
+  Skipped:      1
+ TOTAL METHODS: 33
+ Classes:       3 proved of 7
+ DURATION:       3276.9 secs
+
+1 error
+16 warnings
+142 verification failures

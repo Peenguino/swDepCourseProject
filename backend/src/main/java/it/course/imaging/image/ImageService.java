@@ -31,11 +31,31 @@ import org.springframework.web.server.ResponseStatusException;
 public class ImageService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
-    private static final long MAX_PIXELS = 40_000_000L;
+    private static final /*@ spec_public @*/ long MAX_PIXELS = 40_000_000L;
 
-    private final ImageAssetRepository repository;
-    private final Path storageDir;
+    private final /*@ spec_public @*/ ImageAssetRepository repository;
+    private final /*@ spec_public @*/ Path storageDir;
 
+    /*
+     * Model methods used by the specifications below. String.trim() cannot appear in a JML clause (OpenJML rejects it
+     * as non-pure), so "blank" and "trimmed" are defined with charAt(), mirroring trim()'s definition (chars <= ' ').
+     */
+    /*@ public static model pure boolean isNotBlank(String s) {
+      @   return (\exists int i; 0 <= i && i < s.length(); s.charAt(i) > ' ');
+      @ }
+      @ public static model pure boolean isTrimmed(String s) {
+      @   return s.length() == 0 || (s.charAt(0) > ' ' && s.charAt(s.length() - 1) > ' ');
+      @ }
+      @*/
+
+    /** Class invariant: the collaborators are always set (Spring injects them through the constructor). */
+    //@ public invariant repository != null && storageDir != null;
+
+    /*@ public behavior
+      @   requires repository != null && storageDir != null;
+      @   ensures this.repository == repository;
+      @   signals_only RuntimeException; // Path.of rejects malformed paths (InvalidPathException)
+      @*/
     public ImageService(ImageAssetRepository repository, @Value("${app.storage-dir}") String storageDir) {
         this.repository = repository;
         this.storageDir = Path.of(storageDir).toAbsolutePath().normalize();
@@ -46,14 +66,38 @@ public class ImageService {
         Files.createDirectories(storageDir);
     }
 
+    /*@ public behavior
+      @   ensures \result != null;
+      @   signals_only RuntimeException; // repository failures are not handled here
+      @*/
     public List<ImageResponse> findAll() {
         return repository.findAllByOrderByCreatedAtDesc().stream().map(ImageResponse::from).toList();
     }
 
+    /*@ public behavior
+      @   requires id != null;
+      @   ensures \result != null;
+      @   signals_only RuntimeException; // ResponseStatusException 404 when the id is unknown
+      @*/
+    //+RAC@ ensures \result.id().equals(id); // UUID.equals has no JML spec: checked at runtime (RAC) only
     public ImageResponse findById(UUID id) {
         return ImageResponse.from(getAsset(id));
     }
 
+    /*@ public behavior
+      @   // same constraints the controller enforces with @NotBlank / @Size
+      @   requires file != null;
+      @   requires isNotBlank(title) && title.length() <= 120;
+      @   requires description.length() <= 1000;
+      @   ensures \result != null;
+      @   ensures isNotBlank(\result.title()) && isTrimmed(\result.title()) && \result.title().length() <= title.length();
+      @   ensures isTrimmed(\result.description()) && \result.description().length() <= description.length();
+      @   ensures \result.originalFilename().length() <= 255; // long client filenames are truncated
+      @   ensures \result.sizeBytes() > 0;
+      @   ensures \result.width() > 0 && \result.height() > 0;
+      @   ensures (long) \result.width() * \result.height() <= MAX_PIXELS;
+      @   signals_only RuntimeException; // ResponseStatusException 400/500 for empty, invalid or too large images
+      @*/
     public ImageResponse upload(MultipartFile file, String title, String description) {
         if (file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Seleziona un'immagine");
@@ -103,6 +147,19 @@ public class ImageService {
         }
     }
 
+    /*@ public behavior
+      @   requires id != null && request != null;
+      @   requires isNotBlank(request.title()) && request.title().length() <= 120;
+      @   requires request.description() == null || request.description().length() <= 1000;
+      @   ensures \result != null;
+      @   ensures isNotBlank(\result.title()) && isTrimmed(\result.title());
+      @   ensures \result.title().length() <= request.title().length();
+      @   ensures request.description() == null ==> \result.description().length() == 0;
+      @   ensures request.description() != null ==> isTrimmed(\result.description())
+      @                                          && \result.description().length() <= request.description().length();
+      @   signals_only RuntimeException; // ResponseStatusException 404 when the id is unknown
+      @*/
+    //+RAC@ ensures \result.id().equals(id); // UUID.equals has no JML spec: checked at runtime (RAC) only
     public ImageResponse update(UUID id, UpdateImageRequest request) {
         ImageAsset asset = getAsset(id);
         asset.setTitle(request.title().trim());
@@ -110,12 +167,21 @@ public class ImageService {
         return ImageResponse.from(repository.save(asset));
     }
 
+    /*@ public behavior
+      @   requires id != null;
+      @   signals_only RuntimeException; // ResponseStatusException 404 when the id is unknown
+      @*/
     public void delete(UUID id) {
         ImageAsset asset = getAsset(id);
         repository.delete(asset);
         deleteQuietly(storageDir.resolve(asset.getStorageFilename()));
     }
 
+    /*@ public behavior
+      @   requires id != null;
+      @   ensures \result != null && \result.sizeBytes() > 0;
+      @   signals_only RuntimeException; // 404 unknown id, 500 file missing on disk
+      @*/
     public ImageContent content(UUID id) {
         ImageAsset asset = getAsset(id);
         Resource resource = new FileSystemResource(storageDir.resolve(asset.getStorageFilename()));
@@ -125,6 +191,12 @@ public class ImageService {
         return new ImageContent(resource, asset.getOriginalFilename(), asset.getMediaType(), asset.getSizeBytes());
     }
 
+    /*@ public behavior
+      @   requires id != null;
+      @   ensures \result != null && \result.bytes().length > 0;
+      @   ensures \result.filename().endsWith(".png");
+      @   signals_only RuntimeException; // 404 unknown id, 422 undecodable format, 500 I/O error
+      @*/
     public PngImage convertToPng(UUID id) {
         ImageAsset asset = getAsset(id);
         try {
@@ -140,11 +212,21 @@ public class ImageService {
         }
     }
 
+    /*@ private behavior
+      @   requires id != null;
+      @   ensures \result != null;
+      @   signals_only RuntimeException; // ResponseStatusException 404 when the id is unknown
+      @*/
+    //+RAC@ ensures \result.getId().equals(id); // UUID.equals has no JML spec: checked at runtime (RAC) only
     private ImageAsset getAsset(UUID id) {
         return repository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Immagine non trovata"));
     }
 
+    /*@ private normal_behavior
+      @   // "quietly": an I/O failure is logged, never propagated
+      @   requires path != null;
+      @*/
     private void deleteQuietly(Path path) {
         try {
             Files.deleteIfExists(path);

@@ -1,0 +1,39 @@
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:37: warning: No term in this quantified expression can serve as an SMT trigger for k: it is used only in arithmetic, comparisons or logical operations, so the solver may not use the quantifier, or may instantiate it without end; consider stating the property with a model function or pure method
+      @   requires (\forall int k; 1 <= k && k <= values.length;
+                    ^
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:46: warning: No term in this quantified expression can serve as an SMT trigger for k: it is used only in arithmetic, comparisons or logical operations, so the solver may not use the quantifier, or may instantiate it without end; consider stating the property with a model function or pure method
+      @   requires (\exists int k; 1 <= k && k <= values.length;
+                    ^
+Proving methods in org.apache.commons.imaging.internal.SafeOperations
+Starting proof of org.apache.commons.imaging.internal.SafeOperations.SafeOperations() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of org.apache.commons.imaging.internal.SafeOperations.SafeOperations() with prover z3-5.1.0 - no warnings [0.20 secs]
+Starting proof of org.apache.commons.imaging.internal.SafeOperations.add(int@Nullable...) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:56: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:40:) in method add
+        return Arrays.stream(values).reduce(0, Math::addExact);
+        ^
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:40: verify: Associated declaration: src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:56:
+      @   ensures \result == (\sum int j; 0 <= j && j < values.length; (\bigint) values[j]);
+          ^
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:56: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:44:) in method add
+        return Arrays.stream(values).reduce(0, Math::addExact);
+        ^
+src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:44: verify: Associated declaration: src/main/java/org/apache/commons/imaging/internal/SafeOperations.java:56:
+      @ also public exceptional_behavior
+                    ^
+Completed proof of org.apache.commons.imaging.internal.SafeOperations.add(int@Nullable...) with prover z3-5.1.0 - with warnings [1.81 secs]
+Completed proving methods in org.apache.commons.imaging.internal.SafeOperations [2.01 secs]
+Summary:
+  Valid:        1
+  Invalid:      1
+  Infeasible:   0
+  Timeout:      0
+  Error:        0
+  Skipped:      0
+ TOTAL METHODS: 2
+ Classes:       0 proved of 1
+ DURATION:          2.2 secs
+
+2 warnings
+4 verification failures

@@ -1,0 +1,191 @@
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:204: warning: Method toString() has 'assignable \everything', making its caller likely impossible to verify
+    /*-RAC@   public normal_behavior
+                     ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:46: warning: Associated declaration: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:204:
+            return rationalNumber.toString();
+                                          ^
+java.lang.ClassCastException: class com.sun.tools.javac.tree.JCTree$JCAssignOp cannot be cast to class com.sun.tools.javac.tree.JCTree$JCBinary (com.sun.tools.javac.tree.JCTree$JCAssignOp and com.sun.tools.javac.tree.JCTree$JCBinary are in module jdk.compiler of loader 'app')
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.addBinaryChecks(JmlAssertionAdder.java:15383)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitAssignopHelper(JmlAssertionAdder.java:15080)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitAssignop(JmlAssertionAdder.java:14999)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCAssignOp.accept(JCTree.java:2113)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1699)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitExec(JmlAssertionAdder.java:8188)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCExpressionStatement.accept(JCTree.java:1604)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:75)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertIntoBlock(JmlAssertionAdder.java:2013)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.loopHelperMakeBody(JmlAssertionAdder.java:19940)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitJmlWhileLoop(JmlAssertionAdder.java:24127)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlWhileLoop.accept(JmlTree.java:2103)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:75)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertIntoBlock(JmlAssertionAdder.java:2013)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitIf(JmlAssertionAdder.java:8076)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCIf.accept(JCTree.java:1573)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convert(JmlAssertionAdder.java:1587)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertMethodBodyNoInit(JmlAssertionAdder.java:1313)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitMethodDef(JmlAssertionAdder.java:20519)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlMethodDecl.accept(JmlTree.java:1436)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitClassDef(JmlAssertionAdder.java:18945)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlClassDecl.accept(JmlTree.java:1344)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:50)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convert(JmlAssertionAdder.java:1587)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlEsc.check(JmlEsc.java:127)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.esc(JmlCompiler.java:800)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.flow(JmlCompiler.java:634)
+	at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:971)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.compile(JmlCompiler.java:208)
+	at jdk.compiler/com.sun.tools.javac.main.Main.compile(Main.java:337)
+	at jdk.compiler/org.jmlspecs.openjml.Main.compile(Main.java:470)
+	at jdk.compiler/org.jmlspecs.openjml.Main.execute(Main.java:296)
+	at jdk.compiler/org.jmlspecs.openjml.Main.execute(Main.java:253)
+	at jdk.compiler/org.jmlspecs.openjml.Main.main(Main.java:218)
+	at jdk.compiler/com.sun.tools.javac.Main.main(Main.java:53)
+Proving methods in org.apache.commons.imaging.common.RationalNumber
+Starting proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(int,int) with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(int,int) with prover z3-5.1.0 - no warnings [0.20 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(int,int,boolean) with prover z3-5.1.0
+Method assertions are validated [0.04 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(int,int,boolean) with prover z3-5.1.0 - no warnings [0.06 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(long,long,boolean) with prover z3-5.1.0
+Method assertions are validated [0.04 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.RationalNumber(long,long,boolean) with prover z3-5.1.0 - no warnings [0.07 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.doubleValue() with prover z3-5.1.0
+Method assertions are validated [34.79 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.doubleValue() with prover z3-5.1.0 - no warnings [34.82 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.factoryMethod(long,long) with prover z3-5.1.0
+Note: Using bit-vector arithmetic
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:87: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method factoryMethod
+        return new RationalNumber((int) n, (int) d);
+                                           ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:87: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method factoryMethod
+        return new RationalNumber((int) n, (int) d);
+                                  ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:87: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:64:) in method factoryMethod
+        return new RationalNumber((int) n, (int) d);
+        ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:64: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:87:
+      @   ensures \result.numerator * d == n * \result.divisor; // same value n/d, possibly reduced
+          ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.factoryMethod(long,long) with prover z3-5.1.0 - with warnings [266.59 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.floatValue() with prover z3-5.1.0
+Method assertions are validated [0.51 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.floatValue() with prover z3-5.1.0 - no warnings [0.53 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.gcd(long,long) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:98: verify: The prover cannot establish an assertion (TerminationDecreases: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:105:) in method gcd
+      @   measured_by b < 0 ? -b : b;
+                            ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:105: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:98:
+        return gcd(b, a % b);
+                  ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:101: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    private static long gcd(final long a, final long b) {
+                        ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.gcd(long,long) with prover z3-5.1.0 - with warnings [301.18 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.intValue() with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:312: verify: The prover cannot establish an assertion (PossiblyDivideByZero) in method intValue
+        return (int) (numerator / divisor);
+                                ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.intValue() with prover z3-5.1.0 - with warnings [1.05 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.longValue() with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:323: verify: The prover cannot establish an assertion (ArithmeticOperationRange) in method longValue: overflow in long divide
+        return numerator / divisor;
+                         ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:323: verify: The prover cannot establish an assertion (PossiblyDivideByZero) in method longValue
+        return numerator / divisor;
+                         ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.longValue() with prover z3-5.1.0 - with warnings [2.01 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.negate() with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:368: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:342:) in method negate
+        return new RationalNumber(-n, d, false);
+        ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:342: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:368:
+      @   ensures !\result.unsignedType && \result.numerator < 0;
+          ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:368: verify: The prover cannot establish an assertion (Precondition: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:275:) in method negate
+        return new RationalNumber(-n, d, false);
+               ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:275: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:368:
+    private RationalNumber(final long numerator, final long divisor, final boolean unsignedType) {
+            ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:271: verify: Precondition conjunct is false: !unsignedType ==> Integer.MIN_VALUE <= numerator && numerator <= Integer.MAX_VALUE && Integer.MIN_VALUE <= divisor && divisor <= Integer.MAX_VALUE
+      @   requires !unsignedType ==> Integer.MIN_VALUE <= numerator && numerator <= Integer.MAX_VALUE
+                                 ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:365: verify: The prover cannot establish an assertion (ExceptionList: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:344:) in method negate
+                throw new NumberFormatException("Unsigned numerator is too large to negate " + numerator);
+                                                                                             ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:344: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:365:
+      @   signals_only NumberFormatException;
+          ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.negate() with prover z3-5.1.0 - with warnings [11.80 secs]
+Proving methods in org.apache.commons.imaging.common.RationalNumber.Option
+Starting proof of org.apache.commons.imaging.common.RationalNumber.Option.Option(org.apache.commons.imaging.common.RationalNumber,double) with prover z3-5.1.0
+Method assertions are validated [0.03 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.Option.Option(org.apache.commons.imaging.common.RationalNumber,double) with prover z3-5.1.0 - no warnings [0.04 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.Option.factory(org.apache.commons.imaging.common.RationalNumber,double) with prover z3-5.1.0
+Method assertions are validated [6.38 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.Option.factory(org.apache.commons.imaging.common.RationalNumber,double) with prover z3-5.1.0 - no warnings [6.41 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.Option.toString() with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:46: verify: The prover cannot establish an assertion (Postcondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:205:) in method toString
+            return rationalNumber.toString();
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:205: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:46:
+    @     ensures \result.chars == modelString;
+          ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.Option.toString() with prover z3-5.1.0 - with warnings [1.77 secs]
+Completed proving methods in org.apache.commons.imaging.common.RationalNumber.Option [8.22 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.toDisplayString() with prover z3-5.1.0
+Method assertions are validated [6.13 secs]
+Completed proof of org.apache.commons.imaging.common.RationalNumber.toDisplayString() with prover z3-5.1.0 - no warnings [6.25 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.toString() with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:395: verify: The prover cannot establish an assertion (ExceptionalPostcondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:204:) in method toString
+        return numerator + "/" + divisor + " (" + nf.format((double) numerator / divisor) + ")";
+                               ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:204: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:395:
+    /*-RAC@   public normal_behavior
+                     ^
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:393: verify: The prover cannot establish an assertion (Postcondition: /home/peenguino/opt/openjml/specs/java/lang/Object.jml:205:) in method toString
+            return nf.format(numerator / divisor);
+            ^
+/home/peenguino/opt/openjml/specs/java/lang/Object.jml:205: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/RationalNumber.java:393:
+    @     ensures \result.chars == modelString;
+          ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.toString() with prover z3-5.1.0 - with warnings [81.65 secs]
+Starting proof of org.apache.commons.imaging.common.RationalNumber.valueOf(double) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/RationalNumber.java:122: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    public static RationalNumber valueOf(double value) {
+                                 ^
+Completed proof of org.apache.commons.imaging.common.RationalNumber.valueOf(double) with prover z3-5.1.0 - TIMEOUT [301.18 secs]
+Completed proving methods in org.apache.commons.imaging.common.RationalNumber [1015.62 secs]
+Summary:
+  Valid:        8
+  Invalid:      7
+  Infeasible:   0
+  Timeout:      1
+  Error:        0
+  Skipped:      0
+ TOTAL METHODS: 16
+ Classes:       0 proved of 2
+ DURATION:       1016.3 secs
+
+2 warnings
+24 verification failures

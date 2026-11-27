@@ -29,6 +29,11 @@ public interface Palette {
      * @param index The palette index to look up
      * @return The color in ARGB format
      */
+    /*@ public normal_behavior
+      @   // the contract lives in the interface: an implementation may only weaken it (JML "also")
+      @   requires 0 <= index && index < length();
+      @ pure
+      @*/
     int getEntry(int index);
 
     /**
@@ -45,6 +50,10 @@ public interface Palette {
      *
      * @return The number of palette entries
      */
+    /*@ public normal_behavior
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     int length();
 
 }

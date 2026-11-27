@@ -28,15 +28,18 @@ public class AllocationRequestException extends ImagingRuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    /*@ private normal_behavior
+      @ pure
+      @*/
     private static String format(final int limit, final BigInteger request) {
         return String.format("Allocation limit %,d exceeded: %,d", limit, request);
     }
 
     /** The allocation limit. */
-    private final int limit;
+    private final /*@ spec_public @*/ int limit;
 
     /** The allocation request. */
-    private final BigInteger request;
+    private final /*@ spec_public @*/ BigInteger request;
 
     /**
      * Constructs a new instance.
@@ -44,6 +47,10 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param limit   The allocation limit.
      * @param request The allocation request.
      */
+    /*@ public normal_behavior
+      @   ensures this.limit == limit && this.request == request;
+      @ pure
+      @*/
     public AllocationRequestException(final int limit, final BigInteger request) {
         super(format(limit, request));
         this.limit = limit;
@@ -58,6 +65,10 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param throwable The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                  the cause is nonexistent or unknown.)
      */
+    /*@ public normal_behavior
+      @   ensures this.limit == limit && this.request == request;
+      @ pure
+      @*/
     public AllocationRequestException(final int limit, final BigInteger request, final Throwable throwable) {
         super(format(limit, request), throwable);
         this.limit = limit;
@@ -70,6 +81,10 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param limit   The allocation limit.
      * @param request The allocation request.
      */
+    /*@ public normal_behavior
+      @   ensures this.limit == limit;
+      @ pure
+      @*/
     public AllocationRequestException(final int limit, final int request) {
         this(limit, BigInteger.valueOf(request));
     }
@@ -82,6 +97,10 @@ public class AllocationRequestException extends ImagingRuntimeException {
      * @param throwable The cause (which is saved for later retrieval by the {@link #getCause()} method). (A {@code null} value is permitted, and indicates that
      *                  the cause is nonexistent or unknown.)
      */
+    /*@ public normal_behavior
+      @   ensures this.limit == limit;
+      @ pure
+      @*/
     public AllocationRequestException(final int limit, final long request, final Throwable throwable) {
         this(limit, BigInteger.valueOf(request), throwable);
     }

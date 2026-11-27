@@ -20,10 +20,10 @@ package org.apache.commons.imaging;
  * Used to specify pixel density and physical dimensions when reading or storing image information.
  */
 public final class PixelDensity {
-    private static final int PIXEL_NO_UNIT = 0;
-    private static final int PIXEL_PER_INCH = 254;
-    private static final int PIXEL_PER_METRE = 10000;
-    private static final int PIXEL_PER_CENTIMETRE = 100;
+    private static final /*@ spec_public @*/ int PIXEL_NO_UNIT = 0;
+    private static final /*@ spec_public @*/ int PIXEL_PER_INCH = 254;
+    private static final /*@ spec_public @*/ int PIXEL_PER_METRE = 10000;
+    private static final /*@ spec_public @*/ int PIXEL_PER_CENTIMETRE = 100;
 
     /**
      * Creates a pixel density from pixels per centimetre.
@@ -32,6 +32,10 @@ public final class PixelDensity {
      * @param y vertical density in pixels per centimetre.
      * @return The pixel density.
      */
+    /*@ public normal_behavior
+      @   requires x >= 0 && y >= 0; // also rules out NaN
+      @   ensures \result.horizontalDensity == x && \result.verticalDensity == y && \result.isInCentimetres();
+      @*/
     public static PixelDensity createFromPixelsPerCentimetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_CENTIMETRE);
     }
@@ -43,6 +47,10 @@ public final class PixelDensity {
      * @param y vertical density in pixels per inch.
      * @return The pixel density.
      */
+    /*@ public normal_behavior
+      @   requires x >= 0 && y >= 0;
+      @   ensures \result.horizontalDensity == x && \result.verticalDensity == y && \result.isInInches();
+      @*/
     public static PixelDensity createFromPixelsPerInch(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_INCH);
     }
@@ -54,6 +62,10 @@ public final class PixelDensity {
      * @param y vertical density in pixels per metre.
      * @return The pixel density.
      */
+    /*@ public normal_behavior
+      @   requires x >= 0 && y >= 0;
+      @   ensures \result.horizontalDensity == x && \result.verticalDensity == y && \result.isInMetres();
+      @*/
     public static PixelDensity createFromPixelsPerMetre(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_PER_METRE);
     }
@@ -65,17 +77,33 @@ public final class PixelDensity {
      * @param y vertical density (unitless).
      * @return The pixel density.
      */
+    /*@ public normal_behavior
+      @   requires x >= 0 && y >= 0;
+      @   ensures \result.horizontalDensity == x && \result.verticalDensity == y && \result.isUnitless();
+      @*/
     public static PixelDensity createUnitless(final double x, final double y) {
         return new PixelDensity(x, y, PIXEL_NO_UNIT);
     }
 
-    private final double horizontalDensity;
+    private final /*@ spec_public @*/ double horizontalDensity;
 
-    private final double verticalDensity;
+    private final /*@ spec_public @*/ double verticalDensity;
 
     // One-tenth of a millimetre units.
-    private final int unitLength;
+    private final /*@ spec_public @*/ int unitLength;
 
+    /** Class invariant: the unit is one of the four supported ones (no unit, inch, metre, centimetre). */
+    //@ public invariant unitLength == 0 || unitLength == 254 || unitLength == 10000 || unitLength == 100;
+
+    /** Class invariant: densities are non-negative numbers (never NaN). */
+    //@ public invariant horizontalDensity >= 0 && verticalDensity >= 0;
+
+    /*@ private normal_behavior
+      @   requires horizontalDensity >= 0 && verticalDensity >= 0;
+      @   requires unitLength == 0 || unitLength == 254 || unitLength == 10000 || unitLength == 100;
+      @   ensures this.horizontalDensity == horizontalDensity && this.verticalDensity == verticalDensity;
+      @   ensures this.unitLength == unitLength;
+      @*/
     private PixelDensity(final double horizontalDensity, final double verticalDensity, final int unitLength) {
         this.horizontalDensity = horizontalDensity;
         this.verticalDensity = verticalDensity;
@@ -87,6 +115,10 @@ public final class PixelDensity {
      *
      * @return The raw horizontal density.
      */
+    /*@ public normal_behavior
+      @   ensures \result == horizontalDensity;
+      @ pure
+      @*/
     public double getRawHorizontalDensity() {
         return horizontalDensity;
     }
@@ -96,6 +128,10 @@ public final class PixelDensity {
      *
      * @return The raw vertical density.
      */
+    /*@ public normal_behavior
+      @   ensures \result == verticalDensity;
+      @ pure
+      @*/
     public double getRawVerticalDensity() {
         return verticalDensity;
     }
@@ -105,6 +141,14 @@ public final class PixelDensity {
      *
      * @return The horizontal density in pixels per centimetre.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInCentimetres() ==> \result == horizontalDensity;
+      @   ensures !isInCentimetres() ==> \result == horizontalDensity * PIXEL_PER_CENTIMETRE / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double horizontalDensityCentimetres() {
         if (isInCentimetres()) {
             return horizontalDensity;
@@ -117,6 +161,14 @@ public final class PixelDensity {
      *
      * @return The horizontal density in pixels per inch.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInInches() ==> \result == horizontalDensity;
+      @   ensures !isInInches() ==> \result == horizontalDensity * PIXEL_PER_INCH / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double horizontalDensityInches() {
         if (isInInches()) {
             return horizontalDensity;
@@ -129,6 +181,14 @@ public final class PixelDensity {
      *
      * @return The horizontal density in pixels per metre.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInMetres() ==> \result == horizontalDensity;
+      @   ensures !isInMetres() ==> \result == horizontalDensity * PIXEL_PER_METRE / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double horizontalDensityMetres() {
         if (isInMetres()) {
             return horizontalDensity;
@@ -141,6 +201,10 @@ public final class PixelDensity {
      *
      * @return true if in centimetres, false otherwise.
      */
+    /*@ public normal_behavior
+      @   ensures \result <==> unitLength == 100;
+      @ pure
+      @*/
     public boolean isInCentimetres() {
         return unitLength == PIXEL_PER_CENTIMETRE;
     }
@@ -150,6 +214,10 @@ public final class PixelDensity {
      *
      * @return true if in inches, false otherwise.
      */
+    /*@ public normal_behavior
+      @   ensures \result <==> unitLength == 254;
+      @ pure
+      @*/
     public boolean isInInches() {
         return unitLength == PIXEL_PER_INCH;
     }
@@ -159,6 +227,10 @@ public final class PixelDensity {
      *
      * @return true if in metres, false otherwise.
      */
+    /*@ public normal_behavior
+      @   ensures \result <==> unitLength == 10000;
+      @ pure
+      @*/
     public boolean isInMetres() {
         return unitLength == PIXEL_PER_METRE;
     }
@@ -168,6 +240,10 @@ public final class PixelDensity {
      *
      * @return true if unitless, false otherwise.
      */
+    /*@ public normal_behavior
+      @   ensures \result <==> unitLength == 0;
+      @ pure
+      @*/
     public boolean isUnitless() {
         return unitLength == PIXEL_NO_UNIT;
     }
@@ -177,6 +253,14 @@ public final class PixelDensity {
      *
      * @return The vertical density in pixels per centimetre.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInCentimetres() ==> \result == verticalDensity;
+      @   ensures !isInCentimetres() ==> \result == verticalDensity * PIXEL_PER_CENTIMETRE / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double verticalDensityCentimetres() {
         if (isInCentimetres()) {
             return verticalDensity;
@@ -189,6 +273,14 @@ public final class PixelDensity {
      *
      * @return The vertical density in pixels per inch.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInInches() ==> \result == verticalDensity;
+      @   ensures !isInInches() ==> \result == verticalDensity * PIXEL_PER_INCH / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double verticalDensityInches() {
         if (isInInches()) {
             return verticalDensity;
@@ -201,6 +293,14 @@ public final class PixelDensity {
      *
      * @return The vertical density in pixels per metre.
      */
+    /*@ public normal_behavior
+      @   // converting a unitless density to a physical unit is meaningless (the code would divide by zero)
+      @   requires !isUnitless();
+      @   ensures isInMetres() ==> \result == verticalDensity;
+      @   ensures !isInMetres() ==> \result == verticalDensity * PIXEL_PER_METRE / unitLength;
+      @   ensures \result >= 0;
+      @ pure
+      @*/
     public double verticalDensityMetres() {
         if (isInMetres()) {
             return verticalDensity;

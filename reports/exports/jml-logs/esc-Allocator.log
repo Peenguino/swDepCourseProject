@@ -1,0 +1,247 @@
+src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:73: warning: Method AllocationRequestException(int,int) has 'assignable \everything', making its caller likely impossible to verify
+    public AllocationRequestException(final int limit, final int request) {
+           ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:153: warning: Associated declaration: src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:73:
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:61: warning: Method AllocationRequestException(int,java.math.BigInteger,java.lang.Throwable) has 'assignable \everything', making its caller likely impossible to verify
+    public AllocationRequestException(final int limit, final BigInteger request, final Throwable throwable) {
+           ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:183: warning: Associated declaration: src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:61:
+            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)), e);
+                  ^
+src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:73: warning: Method AllocationRequestException(int,int) has 'assignable \everything', making its caller likely impossible to verify
+    public AllocationRequestException(final int limit, final int request) {
+           ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:186: warning: Associated declaration: src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:73:
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:85: warning: Method AllocationRequestException(int,long,java.lang.Throwable) has 'assignable \everything', making its caller likely impossible to verify
+    public AllocationRequestException(final int limit, final long request, final Throwable throwable) {
+           ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:216: warning: Associated declaration: src/main/java/org/apache/commons/imaging/common/AllocationRequestException.java:85:
+            throw new AllocationRequestException(LIMIT, request, e);
+                  ^
+Proving methods in org.apache.commons.imaging.common.Allocator
+Starting proof of org.apache.commons.imaging.common.Allocator.Allocator() with prover z3-5.1.0
+Method assertions are validated [0.11 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.Allocator() with prover z3-5.1.0 - no warnings [0.25 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.<T>apply(int,java.util.function.IntFunction<T>) with prover z3-5.1.0
+Method assertions are validated [0.09 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.<T>apply(int,java.util.function.IntFunction<T>) with prover z3-5.1.0 - no warnings [0.16 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.<T>array(int,java.util.function.IntFunction<T[]>,int) with prover z3-5.1.0
+Method assertions are validated [0.06 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.<T>array(int,java.util.function.IntFunction<T[]>,int) with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.<T>arrayList(int) with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.<T>arrayList(int) with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.byteArray(int) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.byteArray(int) with prover z3-5.1.0 - no warnings [0.07 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.byteArray(long) with prover z3-5.1.0
+Method assertions are validated [0.06 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.byteArray(long) with prover z3-5.1.0 - no warnings [0.08 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.charArray(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:130: verify: The prover cannot establish an assertion (PossiblyNegativeSize) in method charArray
+        return new char[check(request, Character.BYTES)];
+                             ^
+Completed proof of org.apache.commons.imaging.common.Allocator.charArray(int) with prover z3-5.1.0 - with warnings [2.94 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.check(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:153: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:149:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:149: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:153:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:153: verify: The prover cannot establish an assertion (ExceptionList: src/main/java/org/apache/commons/imaging/common/Allocator.java:148:) in method check
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:148: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:153:
+      @   signals_only AllocationRequestException;
+          ^
+Completed proof of org.apache.commons.imaging.common.Allocator.check(int) with prover z3-5.1.0 - with warnings [1.93 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.check(int,int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:181: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            multiplyExact = Math.multiplyExact(request, elementSize);
+                                              ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:181:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:181: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            multiplyExact = Math.multiplyExact(request, elementSize);
+                                              ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:181:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:186: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:186:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:186: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:186:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:186: verify: The prover cannot establish an assertion (ExceptionList: src/main/java/org/apache/commons/imaging/common/Allocator.java:175:) in method check
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:175: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:186:
+      @   signals_only AllocationRequestException;
+          ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:186: verify: The prover cannot establish an assertion (ExceptionalPostcondition: src/main/java/org/apache/commons/imaging/common/Allocator.java:169:) in method check
+            throw new AllocationRequestException(LIMIT, request);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:169: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:186:
+    /*@ public normal_behavior
+               ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:183: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)), e);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:183:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:188: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/common/Allocator.java:173:) in method check
+        return request;
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:173: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:188:
+      @ also public exceptional_behavior
+                    ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:183: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:176:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, BigInteger.valueOf(request).multiply(BigInteger.valueOf(elementSize)), e);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:176: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:183:
+      @ pure
+        ^
+Completed proof of org.apache.commons.imaging.common.Allocator.check(int,int) with prover z3-5.1.0 - with warnings [15.26 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.check(long,int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:210:) in method check: \everything
+            return check(Math.toIntExact(request), elementSize);
+                                        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:210: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:210:) in method check: \everything
+            return check(Math.toIntExact(request), elementSize);
+                                        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:210: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/common/Allocator.java:206:) in method check
+            return check(Math.toIntExact(request), elementSize);
+            ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:206: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+      @ also public exceptional_behavior
+                    ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (Postcondition: src/main/java/org/apache/commons/imaging/common/Allocator.java:205:) in method check
+            return check(Math.toIntExact(request), elementSize);
+            ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:205: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+      @   ensures \result == request;
+          ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (ExceptionalPostcondition: src/main/java/org/apache/commons/imaging/common/Allocator.java:202:) in method check
+            return check(Math.toIntExact(request), elementSize);
+                        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:202: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+    /*@ public normal_behavior
+               ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:216: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:210:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, request, e);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:210: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:216:
+      @ pure
+        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:214: verify: The prover cannot establish an assertion (ExceptionList: src/main/java/org/apache/commons/imaging/common/Allocator.java:209:) in method check
+            return check(Math.toIntExact(request), elementSize);
+                                        ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:209: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:214:
+      @   signals_only AllocationRequestException;
+          ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:216: verify: The prover cannot establish an assertion (Assignable: src/main/java/org/apache/commons/imaging/common/Allocator.java:210:) in method check: \everything
+            throw new AllocationRequestException(LIMIT, request, e);
+                  ^
+src/main/java/org/apache/commons/imaging/common/Allocator.java:210: verify: Associated declaration: src/main/java/org/apache/commons/imaging/common/Allocator.java:216:
+      @ pure
+        ^
+Completed proof of org.apache.commons.imaging.common.Allocator.check(long,int) with prover z3-5.1.0 - with warnings [11.58 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.checkByteArray(int) with prover z3-5.1.0
+Method assertions are validated [0.06 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.checkByteArray(int) with prover z3-5.1.0 - no warnings [0.07 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.doubleArray(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:247: verify: The prover cannot establish an assertion (PossiblyNegativeSize) in method doubleArray
+        return new double[check(request, Double.BYTES)];
+                               ^
+Completed proof of org.apache.commons.imaging.common.Allocator.doubleArray(int) with prover z3-5.1.0 - with warnings [1.03 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.floatArray(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:259: verify: The prover cannot establish an assertion (PossiblyNegativeSize) in method floatArray
+        return new float[check(request, Float.BYTES)];
+                              ^
+Completed proof of org.apache.commons.imaging.common.Allocator.floatArray(int) with prover z3-5.1.0 - with warnings [1.18 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.intArray(int) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.common.Allocator.intArray(int) with prover z3-5.1.0 - no warnings [0.08 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.longArray(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:290: verify: The prover cannot establish an assertion (PossiblyNegativeSize) in method longArray
+        return new long[check(request, Long.BYTES)];
+                             ^
+Completed proof of org.apache.commons.imaging.common.Allocator.longArray(int) with prover z3-5.1.0 - with warnings [1.00 secs]
+Starting proof of org.apache.commons.imaging.common.Allocator.shortArray(int) with prover z3-5.1.0
+Method assertions are INVALID
+src/main/java/org/apache/commons/imaging/common/Allocator.java:302: verify: The prover cannot establish an assertion (PossiblyNegativeSize) in method shortArray
+        return new short[check(request, Short.BYTES)];
+                              ^
+Completed proof of org.apache.commons.imaging.common.Allocator.shortArray(int) with prover z3-5.1.0 - with warnings [0.97 secs]
+Completed proving methods in org.apache.commons.imaging.common.Allocator [36.80 secs]
+Proving methods in org.apache.commons.imaging.common.AllocationRequestException
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,java.math.BigInteger) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,java.math.BigInteger) with prover z3-5.1.0 - no warnings [0.15 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,java.math.BigInteger,Throwable) with prover z3-5.1.0
+Method assertions are validated [0.13 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,java.math.BigInteger,Throwable) with prover z3-5.1.0 - no warnings [0.16 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,int) with prover z3-5.1.0
+Method assertions are validated [0.09 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,int) with prover z3-5.1.0 - no warnings [0.13 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,long,Throwable) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.AllocationRequestException(int,long,Throwable) with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.format(int,java.math.BigInteger) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.format(int,java.math.BigInteger) with prover z3-5.1.0 - no warnings [0.13 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.getLimit() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.getLimit() with prover z3-5.1.0 - no warnings [0.09 secs]
+Starting proof of org.apache.commons.imaging.common.AllocationRequestException.getRequest() with prover z3-5.1.0
+Method assertions are validated [0.07 secs]
+Completed proof of org.apache.commons.imaging.common.AllocationRequestException.getRequest() with prover z3-5.1.0 - no warnings [0.09 secs]
+Completed proving methods in org.apache.commons.imaging.common.AllocationRequestException [0.88 secs]
+Proving methods in org.apache.commons.imaging.ImagingRuntimeException
+Starting proof of org.apache.commons.imaging.ImagingRuntimeException.ImagingRuntimeException(String) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.ImagingRuntimeException.ImagingRuntimeException(String) with prover z3-5.1.0 - no warnings [0.07 secs]
+Starting proof of org.apache.commons.imaging.ImagingRuntimeException.ImagingRuntimeException(String,Throwable) with prover z3-5.1.0
+Method assertions are validated [0.05 secs]
+Completed proof of org.apache.commons.imaging.ImagingRuntimeException.ImagingRuntimeException(String,Throwable) with prover z3-5.1.0 - no warnings [0.07 secs]
+Completed proving methods in org.apache.commons.imaging.ImagingRuntimeException [0.15 secs]
+Summary:
+  Valid:        17
+  Invalid:      8
+  Infeasible:   0
+  Timeout:      0
+  Error:        0
+  Skipped:      0
+ TOTAL METHODS: 25
+ Classes:       2 proved of 3
+ DURATION:         38.6 secs
+
+8 warnings
+43 verification failures

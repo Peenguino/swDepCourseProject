@@ -1,0 +1,209 @@
+Proving methods in it.course.imaging.image.ImageAsset
+Starting proof of it.course.imaging.image.ImageAsset.ImageAsset() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method ImageAsset
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+Completed proof of it.course.imaging.image.ImageAsset.ImageAsset() with prover z3-5.1.0 - with warnings [0.89 secs]
+Starting proof of it.course.imaging.image.ImageAsset.ImageAsset(java.util.UUID,String,String,String,String,String,String,int,int,long) with prover z3-5.1.0
+Method assertions are validated [0.06 secs]
+Completed proof of it.course.imaging.image.ImageAsset.ImageAsset(java.util.UUID,String,String,String,String,String,String,int,int,long) with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getCreatedAt() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getCreatedAt() with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getDescription() with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getDescription() with prover z3-5.1.0 - no warnings [0.16 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getFormat() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getFormat() with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getHeight() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getHeight() with prover z3-5.1.0 - no warnings [0.11 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getId() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getId() with prover z3-5.1.0 - no warnings [0.11 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getMediaType() with prover z3-5.1.0
+Method assertions are validated [0.09 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getMediaType() with prover z3-5.1.0 - no warnings [0.12 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getOriginalFilename() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getOriginalFilename() with prover z3-5.1.0 - no warnings [0.11 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getSizeBytes() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getSizeBytes() with prover z3-5.1.0 - no warnings [0.11 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getStorageFilename() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getStorageFilename() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getTitle() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getTitle() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getUpdatedAt() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getUpdatedAt() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.getWidth() with prover z3-5.1.0
+Method assertions are validated [0.08 secs]
+Completed proof of it.course.imaging.image.ImageAsset.getWidth() with prover z3-5.1.0 - no warnings [0.10 secs]
+Starting proof of it.course.imaging.image.ImageAsset.onCreate() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (Assignable: backend/src/main/java/it/course/imaging/image/ImageAsset.java:94:) in method onCreate: \everything
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:94: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+      @   assignable createdAt, updatedAt;
+          ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:21: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String title;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:24: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String description;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:27: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String originalFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:30: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String storageFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:33: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String format;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:36: verify: The prover cannot establish an assertion (NullField) in method onCreate
+    private /*@ spec_public @*/ String mediaType;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (ExceptionalPostcondition: backend/src/main/java/it/course/imaging/image/ImageAsset.java:93:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:93: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    /*@ normal_behavior
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:99: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:60:) in method onCreate
+        createdAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:60: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:99:
+    //@ public invariant mediaType.length() <= 100;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:56:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:56: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant title.length() <= 120;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:58:) in method onCreate
+    void onCreate() {
+         ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:58: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:98:
+    //@ public invariant originalFilename.length() <= 255;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:98: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    void onCreate() {
+         ^
+Completed proof of it.course.imaging.image.ImageAsset.onCreate() with prover z3-5.1.0 - with warnings [669.14 secs]
+Starting proof of it.course.imaging.image.ImageAsset.onUpdate() with prover z3-5.1.0
+Method assertions are INVALID
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (ExceptionalPostcondition: backend/src/main/java/it/course/imaging/image/ImageAsset.java:103:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:103: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    /*@ normal_behavior
+        ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:62:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:62: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant sizeBytes > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:64:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:64: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant createdAt != null ==> updatedAt != null;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:61:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:61: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant width > 0 && height > 0;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:30: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String storageFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:24: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String description;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:27: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String originalFilename;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:33: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String format;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:21: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String title;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:18: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ UUID id;
+                                     ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (Assignable: backend/src/main/java/it/course/imaging/image/ImageAsset.java:105:) in method onUpdate: \everything
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:105: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+      @   assignable updatedAt;
+          ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:36: verify: The prover cannot establish an assertion (NullField) in method onUpdate
+    private /*@ spec_public @*/ String mediaType;
+                                       ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:110: verify: The prover cannot establish an assertion (InvariantExit: backend/src/main/java/it/course/imaging/image/ImageAsset.java:59:) in method onUpdate
+        updatedAt = Instant.now();
+                               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:59: verify: Associated declaration: backend/src/main/java/it/course/imaging/image/ImageAsset.java:110:
+    //@ public invariant format.length() <= 32;
+               ^
+backend/src/main/java/it/course/imaging/image/ImageAsset.java:109: verify: Validity is unknown - time or memory limit reached: : Aborted proof: timeout
+    void onUpdate() {
+         ^
+Completed proof of it.course.imaging.image.ImageAsset.onUpdate() with prover z3-5.1.0 - with warnings [329.51 secs]
+Starting proof of it.course.imaging.image.ImageAsset.setDescription(String) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of it.course.imaging.image.ImageAsset.setDescription(String) with prover z3-5.1.0 - no warnings [0.14 secs]
+Starting proof of it.course.imaging.image.ImageAsset.setTitle(String) with prover z3-5.1.0
+Method assertions are validated [0.10 secs]
+Completed proof of it.course.imaging.image.ImageAsset.setTitle(String) with prover z3-5.1.0 - no warnings [0.13 secs]
+Completed proving methods in it.course.imaging.image.ImageAsset [1001.32 secs]
+Summary:
+  Valid:        15
+  Invalid:      3
+  Infeasible:   0
+  Timeout:      0
+  Error:        0
+  Skipped:      0
+ TOTAL METHODS: 18
+ Classes:       0 proved of 1
+ DURATION:       1001.9 secs
+
+47 verification failures

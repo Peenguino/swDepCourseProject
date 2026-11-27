@@ -23,24 +23,53 @@ import java.util.Objects;
  */
 public class SimplePalette implements Palette {
 
-    private final int[] palette;
+    private final /*@ spec_public @*/ int[] palette;
+
+    /** Class invariant: the stored palette always exists. */
+    //@ public invariant palette != null;
 
     /**
      * Constructs a new instance.
      *
      * @param palette palette to copy and store.
      */
-    public SimplePalette(final int[] palette) {
-        this.palette = Objects.requireNonNull(palette, "palette").clone();
+    /*@ public normal_behavior
+      @   requires palette != null;
+      @   ensures this.palette.length == palette.length;
+      @   ensures (\forall int i; 0 <= i && i < palette.length; this.palette[i] == palette[i]);
+      @   ensures this.palette != palette; // defensive copy: no aliasing with the caller's array
+      @ also public exceptional_behavior
+      @   requires palette == null;
+      @   signals_only NullPointerException;
+      @*/
+    public SimplePalette(final int /*@ nullable @*/ [] palette) {
+        // Split in two statements only to work around an OpenJML 21.0.29 type-inference bug on chained generic calls.
+        final int[] checked = Objects.requireNonNull(palette, "palette");
+        this.palette = checked.clone();
     }
 
+    /*@ also public normal_behavior
+      @   requires 0 <= index && index < palette.length;
+      @   ensures \result == palette[index];
+      @ pure
+      @*/
     @Override
     public int getEntry(final int index) {
         return palette[index];
     }
 
+    /*@ also public normal_behavior
+      @   ensures -1 <= \result && \result < palette.length;
+      @   ensures \result >= 0 ==> palette[\result] == rgb;
+      @   ensures \result >= 0 ==> (\forall int k; 0 <= k && k < \result; palette[k] != rgb); // first occurrence
+      @   ensures \result == -1 <==> (\forall int k; 0 <= k && k < palette.length; palette[k] != rgb);
+      @ pure
+      @*/
     @Override
     public int getPaletteIndex(final int rgb) {
+        //@ maintaining 0 <= i && i <= palette.length;
+        //@ maintaining (\forall int k; 0 <= k && k < i; palette[k] != rgb);
+        //@ decreases palette.length - i;
         for (int i = 0; i < palette.length; i++) {
             if (palette[i] == rgb) {
                 return i;
@@ -49,6 +78,10 @@ public class SimplePalette implements Palette {
         return -1;
     }
 
+    /*@ also public normal_behavior
+      @   ensures \result == palette.length;
+      @ pure
+      @*/
     @Override
     public int length() {
         return palette.length;

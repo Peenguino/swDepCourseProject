@@ -47,7 +47,7 @@ public class RationalNumber extends Number {
         }
     }
 
-    private static final long serialVersionUID = -1;
+    private static final long serialVersionUID = -1L; // "L" suffix only to work around an OpenJML 21.0.29 constant-check bug
 
     // int-precision tolerance
     private static final double TOLERANCE = 1E-8;
@@ -55,6 +55,14 @@ public class RationalNumber extends Number {
     /** Shallow size constant. */
     public static final int SHALLOW_SIZE = 32;
 
+    /*@ normal_behavior
+      @   // only the "exact" path is specified: inside the int range no truncation is applied
+      @   requires d != 0;
+      @   requires Integer.MIN_VALUE <= n && n <= Integer.MAX_VALUE;
+      @   requires Integer.MIN_VALUE <= d && d <= Integer.MAX_VALUE;
+      @   ensures !\result.unsignedType;
+      @   ensures \result.numerator * d == n * \result.divisor; // same value n/d, possibly reduced
+      @*/
     static RationalNumber factoryMethod(long n, long d) {
         // safer than constructor - handles values outside min/max range.
         // also does some simple finding of common denominators.
@@ -82,6 +90,14 @@ public class RationalNumber extends Number {
     /**
      * Gets the greatest common divisor
      */
+    /*@ private normal_behavior
+      @   requires a != Long.MIN_VALUE && b != Long.MIN_VALUE;
+      @   ensures b == 0 ==> \result == a;
+      @   ensures (a != 0 || b != 0) ==> \result != 0;
+      @   ensures \result != 0 ==> a % \result == 0 && b % \result == 0; // common divisor
+      @   measured_by b < 0 ? -b : b;
+      @ pure
+      @*/
     private static long gcd(final long a, final long b) {
         if (b == 0) {
             return a;
@@ -95,6 +111,14 @@ public class RationalNumber extends Number {
      * @param value rational number double value
      * @return The RationalNumber representation of the double value
      */
+    /*@ public normal_behavior
+      @   // no precondition: the method is documented for every double (NaN and tiny values included);
+      @   // the class invariant must hold on the returned instance
+      @   ensures \result != null && !\result.unsignedType;
+      @   ensures value >= Integer.MAX_VALUE ==> \result.numerator == Integer.MAX_VALUE && \result.divisor == 1;
+      @   ensures value <= -Integer.MAX_VALUE ==> \result.numerator == -Integer.MAX_VALUE && \result.divisor == 1;
+      @   ensures value == 0 ==> \result.numerator == 0 && \result.divisor == 1;
+      @*/
     public static RationalNumber valueOf(double value) {
         if (value >= Integer.MAX_VALUE) {
             return new RationalNumber(Integer.MAX_VALUE, 1);
@@ -182,12 +206,27 @@ public class RationalNumber extends Number {
     /** Whether this is an unsigned type. */
     public final boolean unsignedType;
 
+    /** Class invariant: a rational number never has a zero divisor (see the constructors' Javadoc). */
+    //@ public invariant divisor != 0;
+
+    /** Class invariant: unsigned values are TIFF RATIONALs, i.e. two unsigned 32-bit integers. */
+    //@ public invariant unsignedType ==> 0 <= numerator && numerator <= 0xFFFFFFFFL && 0 < divisor && divisor <= 0xFFFFFFFFL;
+
+    /** Class invariant: signed values are TIFF SRATIONALs, i.e. two signed 32-bit integers. */
+    /*@ public invariant !unsignedType ==> Integer.MIN_VALUE <= numerator && numerator <= Integer.MAX_VALUE
+      @                                 && Integer.MIN_VALUE <= divisor && divisor <= Integer.MAX_VALUE;
+      @*/
+
     /**
      * Constructs an instance based on signed integers.
      *
      * @param numerator A 32-bit signed integer.
      * @param divisor   A non-zero 32-bit signed integer.
      */
+    /*@ public normal_behavior
+      @   requires divisor != 0;
+      @   ensures this.numerator == numerator && this.divisor == divisor && !this.unsignedType;
+      @*/
     public RationalNumber(final int numerator, final int divisor) {
         this.numerator = numerator;
         this.divisor = divisor;
@@ -201,6 +240,12 @@ public class RationalNumber extends Number {
      * @param divisor      A non-zero divisor in the indicated form (signed or unsigned)
      * @param unsignedType indicates whether the input values are to be treated as unsigned.
      */
+    /*@ public normal_behavior
+      @   requires divisor != 0;
+      @   ensures this.unsignedType == unsignedType;
+      @   ensures unsignedType ==> this.numerator == (numerator & 0xFFFFFFFFL) && this.divisor == (divisor & 0xFFFFFFFFL);
+      @   ensures !unsignedType ==> this.numerator == numerator && this.divisor == divisor;
+      @*/
     public RationalNumber(final int numerator, final int divisor, final boolean unsignedType) {
         this.unsignedType = unsignedType;
         if (unsignedType) {
@@ -219,12 +264,26 @@ public class RationalNumber extends Number {
      * @param divisor      A valid denominator
      * @param unsignedType indicates how numerator and divisor values are to be interpreted.
      */
+    /*@ private normal_behavior
+      @   // "A valid numerator / denominator" from the Javadoc, i.e. whatever the invariants require
+      @   requires divisor != 0;
+      @   requires unsignedType ==> 0 <= numerator && numerator <= 0xFFFFFFFFL && 0 < divisor && divisor <= 0xFFFFFFFFL;
+      @   requires !unsignedType ==> Integer.MIN_VALUE <= numerator && numerator <= Integer.MAX_VALUE
+      @                           && Integer.MIN_VALUE <= divisor && divisor <= Integer.MAX_VALUE;
+      @   ensures this.numerator == numerator && this.divisor == divisor && this.unsignedType == unsignedType;
+      @*/
     private RationalNumber(final long numerator, final long divisor, final boolean unsignedType) {
         this.numerator = numerator;
         this.divisor = divisor;
         this.unsignedType = unsignedType;
     }
 
+    /*@ also public normal_behavior
+      @   // Number.jml declares this method "helper", so the class invariant is NOT assumed here: restate it
+      @   requires divisor != 0;
+      @   ensures \result == (double) numerator / (double) divisor;
+      @ spec_pure
+      @*/
     @Override
     public double doubleValue() {
         return (double) numerator / (double) divisor;
@@ -241,11 +300,24 @@ public class RationalNumber extends Number {
         return (float) doubleValue();
     }
 
+    /*@ also public normal_behavior
+      @   // Number.jml declares this method "helper", so the class invariant is NOT assumed here: restate it
+      @   requires divisor != 0 && Integer.MIN_VALUE <= numerator && numerator <= 0xFFFFFFFFL;
+      @   // narrowing to int is intended (Number.intValue() returns an approximation): Java wrap-around semantics
+      @   ensures \result == (int) (numerator / divisor);
+      @ spec_pure code_java_math spec_java_math
+      @*/
     @Override
     public int intValue() {
         return (int) (numerator / divisor);
     }
 
+    /*@ also public normal_behavior
+      @   // Number.jml declares this method "helper", so the class invariant is NOT assumed here: restate it
+      @   requires divisor != 0 && Integer.MIN_VALUE <= numerator && numerator <= 0xFFFFFFFFL;
+      @   ensures \result == numerator / divisor;
+      @ spec_pure
+      @*/
     @Override
     public long longValue() {
         return numerator / divisor;
@@ -259,6 +331,18 @@ public class RationalNumber extends Number {
      *
      * @return A valid instance with a negated value.
      */
+    /*@ public normal_behavior
+      @   requires !unsignedType;
+      @   ensures \result.numerator == -numerator && \result.divisor == divisor && !\result.unsignedType;
+      @ also public normal_behavior
+      @   requires unsignedType && numerator < 0x80000000L; // high-order bit clear
+      @   ensures \result.numerator == -numerator && \result.divisor == divisor && !\result.unsignedType;
+      @ also public behavior
+      @   requires unsignedType && numerator >= 0x80000000L; // high-order bit set: only works if reducible
+      @   ensures !\result.unsignedType && \result.numerator < 0;
+      @   ensures (\bigint) \result.numerator * divisor == -((\bigint) numerator * \result.divisor);
+      @   signals_only NumberFormatException;
+      @*/
     public RationalNumber negate() {
         long n = numerator;
         long d = divisor;
