@@ -271,6 +271,7 @@
               <inputExclude>docker-compose.yml</inputExclude>
               <inputExclude>.dockerignore</inputExclude>
               <inputExclude>.env.example</inputExclude>
+              <inputExclude>workingNotes/*</inputExclude>
             </inputExcludes>
           </configuration>
         </plugin>
