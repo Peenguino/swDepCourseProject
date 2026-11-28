@@ -1,0 +1,4 @@
+WARNING: Final field exceptions in class org.spdx.storage.listedlicense.ExceptionJsonTOC has been mutated reflectively by class com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$2 in unnamed module @7b6c6005 (file:/home/peenguino/.m2/repository/com/google/code/gson/gson/2.14.0/gson-2.14.0.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+writing to /tmp/claude-1000/-home-peenguino-swDepCourseProject/19fa8319-3e68-497b-965c-d57edb12238d/scratchpad/bench-s3/target/moditect/org.apache.commons.imaging/versions/9/module-info.java

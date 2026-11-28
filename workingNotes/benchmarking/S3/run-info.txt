@@ -1,0 +1,13 @@
+2026-11-28T12:56:42+01:00 start
+power_online=0 battery=87% governor=powersave
+codice: d0b82c97 (S2) su copia isolata; pom con jmh-core 1.37-extended (AMBER) anche nel processor path
+AMBER: -hmodel oscnn -hhost localhost -hport 5001 -w 100ms -r 100ms ; JPT service = jpt_service avviato in venv Python 3.9 (no Docker)
+openjdk version "27.0.1.1" 2026-11-17
+install_exit=0
+compile_library_exit=0
+2026-11-28T12:57:22+01:00 library start
+library_exit=0 2026-11-28T13:06:05+01:00
+power_online=0 battery=82% governor=powersave
+compile_backend_exit=0
+backend_exit=0 2026-11-28T13:07:25+01:00
+power_online=0 battery=82% governor=powersave

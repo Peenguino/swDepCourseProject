@@ -287,5 +287,178 @@ con `jdkCrc32`.
 - **S2 / post-fix H1+H2+H3:** working tree dopo `b59fbc55` (`PngWriter.java`, `PaletteFactory.java`, `PngCrc.java`);
   da committare per conservare la versione misurata in S2.
 - H2 resta nel codice di S2 cosi' com'e' (ipotesi smentita, documentata); la versione pre-fix migliore e' nel commit S1.
-- **Punto aperto per S3:** decidere se AMBER gira sul codice S2 cosi' com'e' (piano originale) o su S2 con H2 riportato
-  alla versione S1.
+- **S2 committata:** `d0b82c97` ("microbenchmarking: defined and runned S2 benchmark session").
+- **Decisione su S3 (presa dopo S2):** AMBER gira sul codice S2 cosi' com'e', H2 compreso. S3 deve isolare una sola
+  variabile (warm-up fisso vs dinamico); togliere H2 prima cambierebbe anche il codice e richiederebbe un'altra
+  sessione a warm-up fisso come riferimento. AMBER non giudica la velocita' del codice ma quando fermare il warm-up:
+  B2 con la regressione e' un workload valido come gli altri.
+
+## Step successivi (in ordine, da riprendere)
+
+1. ~~**S3 con AMBER sul codice S2**~~ **fatto** (vedi # S3 AMBER) (`d0b82c97`): verifica compatibilita' AMBER (jar esteso su JDK 27, servizio JPT),
+   poi esecuzione B1-B4 con `@DynamicHalt`. Domande: quanto warm-up si risparmia/spende rispetto a 5 x 1 s? i punteggi
+   restano dentro l'errore di S2? il warm-up fisso era sovradimensionato?
+2. **Annullamento di H2, documentato:** `PaletteFactory.java` riportato byte per byte alla versione del commit S1
+   (`b59fbc55`), cosi' i numeri B2 di S1 restano validi senza rieseguire. Nel report: "ipotesi smentita dalla misura,
+   modifica annullata".
+3. **JU2JMH sugli stessi metodi**, eseguito sul codice di S1 e di S2 (stessa config fissa, copia isolata con i tre file
+   `src/main` di `b59fbc55`). Domanda: un benchmark generato in automatico dai test avrebbe visto le stesse cose,
+   in particolare la regressione H2?
+   - `PngWritePredictorTest#testWriteWithPredictor` -> B1 (H1 ramo predictor + H3);
+   - `PaletteFactoryTest#testIsGrayscale`, `#testHasTransparency` -> B2 (H2; immagini 10x10, sotto 1 ms);
+   - opzionale `PngCrcTest#testCrc` -> B3 (buffer di 4 byte, dominato dalla tabella);
+   - escluso `ImageServiceTest` (Mockito, `@TempDir`; il backend e' coperto da B4).
+   - Rischi: JU2JMH usa Gradle e qui c'e' solo JDK 27; output in `src/test/java` (package `...benchmarks.ju2jmh`)
+     invece di `src/jmh/java`; header di licenza (RAT) e Checkstyle sul codice generato.
+4. **Report** `reports/benchmarking.md` (max 5000 caratteri) e link dal README.
+
+---
+
+# S3 AMBER (warm-up dinamico, codice S2)
+
+## Verifica di compatibilita' (2026-11-28)
+
+Repo AMBER: https://github.com/AntonioTrovato/AMBER, commit `dcc5c654be1e87bf78079830b27c6a67eb8b8d25`, clonato nello
+scratchpad (fuori dal workspace). Jar `jmh-core-1.37-all.jar` (sha256 `b13f082d...cb88d0d`).
+
+| Punto | Esito |
+|---|---|
+| Jar su JDK 27 | OK: class file versione 52 (Java 8); stesso warning `sun.misc.Unsafe` di JMH 1.37 |
+| Installazione Maven | `mvn install:install-file ... -DartifactId=jmh-core -Dversion=1.37-extended` (come da tutorial) |
+| Generatore (BenchmarkList) | **serve il jmh-core esteso anche nel processor path**: il formato della BenchmarkList esteso ha 3 campi in piu' (host/port/model). Con solo `jmh-generator-annprocess:1.37` il processor userebbe il jmh-core vanilla (dipendenza transitiva). Aggiunto `jmh-core:1.37-extended` come primo `<path>` di `annotationProcessorPaths`; verificato che la BenchmarkList generata contiene i 3 campi e che nel classpath c'e' solo il jar esteso |
+| Docker | **non installato** su questa macchina. Il servizio JPT e' stato avviato senza container: venv Python 3.9 (come l'immagine `python:3.9-bookworm`) in `~/.cache/amber-jpt/venv`, creato con `uv`, `requirements.txt` del servizio identico tranne `torch==2.0.1+cpu` (niente CUDA) |
+| Avvio servizio | `python service.py` va in abort (`random_device could not be read`) per un conflitto tra le librerie native di TF 2.13 e torch 2.0.1 quando tensorflow e' importato per primo (ogni modello si carica bene da solo). Workaround senza toccare il servizio: wrapper che importa `torch` e poi esegue `service.py` con `runpy` |
+| Porta | il servizio ascolta su **5001** e `@DynamicHalt` ha default `5001`: il `50001` del tutorial e' un refuso |
+| Modelli | prova manuale: serie piatta -> `{"steady":true}`, serie decrescente -> `{"steady":false}` su tutti e 3 gli endpoint. **Bug nel servizio** (`setup.py`): `models["OSCNN"]` e `models["Rocket"]` sono assegnati a `fcn_mdl`, quindi tutti e tre gli endpoint usano di fatto il modello **FCN**. Usiamo `oscnn` come da tutorial ma la decisione la prende FCN |
+| Smoke test | `PngCrcBenchmark.jdkCrc32`, length=1024, 1 fork, `-hmodel oscnn`: "Halt eseguito" dopo 107 iterazioni, 0.110 us/op (S2: 0.111). Funziona, ma il fork e' durato 1 min 48 s |
+
+### Differenza tra jar pubblicato e sorgente AMBER (iterazioni da 100 ms)
+
+Nel sorgente (`BaseRunner.runBenchmark`) con dynamic halt attivo il warm-up diventa fino a 500 iterazioni da **100 ms**
+(`wp.setTime(100, MILLISECONDS)`); dalla 100a iterazione, a ogni iterazione le ultime 100 medie vanno al servizio; se
+risponde `steady` il warm-up si ferma e **le ultime 100 iterazioni di warm-up diventano la misura**; altrimenti seguono
+100 iterazioni di misura (tetto 600 iterazioni totali). `@Warmup`/`@Measurement` (conteggi) sono ignorati.
+
+Il jar pubblicato invece **non contiene `setTime`** (verificato con `javap`: assente sia in `BaseRunner` sia in
+`IterationParams`), quindi le iterazioni restano della durata di `@Warmup` (1 s): nello smoke test 107 iterazioni =
+~108 s, e le richieste al servizio arrivavano a ~1.1 s l'una dall'altra. Con 18 configurazioni x 3 fork S3 durerebbe
+da 1.5 h (halt alla 100a) a 9 h (nessun halt).
+
+**Scelta:** riproduciamo il comportamento del sorgente passando `-w 100ms -r 100ms` da riga di comando (il resto della
+logica del jar coincide col sorgente: 500 / 100 / 600 verificati nel bytecode). Durata attesa per fork: da 10 s
+(halt alla 100a iterazione) a 60 s.
+
+**Conseguenza per il confronto:** con AMBER la finestra minima e' 100 x 100 ms = 10 s per fork prima del primo halt
+possibile, pari al nostro warm-up + misura fissi (5 s + 5 s). AMBER quindi qui non puo' risparmiare tempo: puo' solo
+costare uguale o di piu'. La domanda utile diventa se i risultati restano coerenti con S2 e quanto spesso il modello
+giudica stabile la serie alla prima occasione.
+
+### Annotazione vs riga di comando
+
+Il dynamic halt si attiva con `-hmodel oscnn` (opzione documentata da AMBER, equivalente a `@DynamicHalt(model="oscnn")`).
+Le classi di benchmark restano quelle di S1/S2: `@DynamicHalt` esiste solo nel jar esteso, che non e' su Maven Central,
+quindi metterla nei sorgenti romperebbe la build normale e la CI. Il pom del workspace non e' stato modificato: le
+modifiche (versione `1.37-extended` + processor path) sono solo nella copia isolata (diff in `S3/pom-*.diff`).
+
+## Comandi S3
+
+```bash
+# servizio JPT (una volta), fuori dal workspace
+git clone https://github.com/AntonioTrovato/AMBER.git        # commit dcc5c654
+python3 -m venv ~/.cache/amber-jpt/tools && ~/.cache/amber-jpt/tools/bin/pip install uv
+uv venv --python 3.9 ~/.cache/amber-jpt/venv
+uv pip install -r requirements-cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match
+cd AMBER/jpt_service && ~/.cache/amber-jpt/venv/bin/python run_jpt.py    # import torch; runpy.run_path("service.py")
+curl localhost:5001/                                                     # {"status":"Service running"}
+
+# jar AMBER in ~/.m2
+mvn install:install-file -Dfile=jmh-core-1.37-all.jar -DgroupId=org.openjdk.jmh -DartifactId=jmh-core \
+    -Dversion=1.37-extended -Dpackaging=jar
+
+# copia isolata come S1/S2, poi pom con jmh-core 1.37-extended (dipendenza + primo path del processor)
+mvn -q install -DskipTests -Djacoco.skip=true
+mvn -q -Pbenchmark clean test-compile -Djacoco.skip=true
+mvn -q dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=library.cp
+java -cp target/test-classes:target/classes:$(cat library.cp) org.openjdk.jmh.Main \
+    -hmodel oscnn -hhost localhost -hport 5001 -w 100ms -r 100ms -rf json -rff library.json org.apache.commons.imaging
+# backend: stessi passi in backend/ con it.course.imaging -> backend.json
+```
+
+Primo lancio fallito subito (exit 0 ma nessun benchmark, solo l'help di JMH): il tutorial indica `-host`, l'opzione
+reale del jar e' **`-hhost`** (`-h` + `ost` veniva interpretato male). Corretto e rilanciato; log del tentativo scartato
+non conservati nel repo.
+
+Il profilo `benchmark` non permette di aggiungere argomenti a `org.openjdk.jmh.Main`, quindi in S3 il runner e' lanciato
+direttamente con lo stesso classpath di test che usa exec-maven-plugin. Script completo: `S3/run-s3.sh`.
+
+## Risultati S3 (2026-11-28, 12:56-13:07)
+
+Condizioni identiche a S1/S2: batteria (88% -> 82%), governor `powersave`, JDK 27.0.1.1, copia isolata, codice S2
+(`d0b82c97`). Unica differenza: `-hmodel oscnn -hhost localhost -hport 5001 -w 100ms -r 100ms` (AMBER).
+
+File: [S3/library.json](S3/library.json), [S3/backend.json](S3/backend.json), [S3/library.log](S3/library.log),
+[S3/backend.log](S3/backend.log), [S3/run-info.txt](S3/run-info.txt), [S3/run-s3.sh](S3/run-s3.sh),
+[S3/run_jpt.py](S3/run_jpt.py), [S3/requirements-cpu.txt](S3/requirements-cpu.txt), [S3/pom-library.diff](S3/pom-library.diff),
+[S3/pom-backend.diff](S3/pom-backend.diff).
+
+Errore = intervallo di confidenza 99.9% di JMH. S1/S2: 3 fork x 5 iterazioni da 1 s (15 campioni); S3: 3 fork x 100
+iterazioni da 100 ms (300 campioni). "Iter. totali per fork" = iterazioni eseguite prima dell'halt (minimo 100).
+
+| Benchmark | Param | Unita' | S1 | S2 | S3 (AMBER) | S3 vs S2 | dentro errore S2? | iter. totali per fork | halt |
+|---|---|---|---|---|---|---|---|---|---|
+| PaletteFactoryBenchmark.hasTransparencyFullScan | size=256 | us/op | 122.251 ± 0.943 | 167.357 ± 1.274 | 169.517 ± 0.423 | +1.3% | no | 101/101/101 | halt |
+| PaletteFactoryBenchmark.hasTransparencyFullScan | size=1024 | us/op | 1943.551 ± 7.356 | 2720.597 ± 68.585 | 2697.616 ± 14.385 | -0.8% | si' | 100/101/101 | halt |
+| PaletteFactoryBenchmark.isGrayscaleFullScan | size=256 | us/op | 122.931 ± 0.733 | 172.873 ± 2.917 | 178.169 ± 2.064 | +3.1% | no | 101/101/101 | halt |
+| PaletteFactoryBenchmark.isGrayscaleFullScan | size=1024 | us/op | 1904.277 ± 12.357 | 2857.781 ± 137.302 | 2771.160 ± 7.205 | -3.0% | si' | 101/101/101 | halt |
+| PngWriterBenchmark.writePng | kind=RGB,size=256 | ms/op | 6.727 ± 0.021 | 6.090 ± 0.042 | 6.155 ± 0.025 | +1.1% | si' | 103/102/101 | halt |
+| PngWriterBenchmark.writePng | kind=RGB,size=1024 | ms/op | 112.407 ± 0.460 | 102.394 ± 0.778 | 103.822 ± 1.209 | +1.4% | si' | 101/103/101 | halt |
+| PngWriterBenchmark.writePng | kind=ARGB_OPAQUE,size=256 | ms/op | 6.832 ± 0.014 | 6.312 ± 0.042 | 6.368 ± 0.029 | +0.9% | si' | 101/101/102 | halt |
+| PngWriterBenchmark.writePng | kind=ARGB_OPAQUE,size=1024 | ms/op | 114.612 ± 0.462 | 105.148 ± 0.509 | 107.108 ± 1.262 | +1.9% | no | 101/101/103 | halt |
+| PngWriterBenchmark.writePng | kind=GRAY_CONTENT,size=256 | ms/op | 2.183 ± 0.005 | 1.987 ± 0.021 | 1.999 ± 0.014 | +0.6% | si' | 107/105/101 | halt |
+| PngWriterBenchmark.writePng | kind=GRAY_CONTENT,size=1024 | ms/op | 37.702 ± 0.174 | 34.740 ± 0.384 | 35.169 ± 0.631 | +1.2% | si' | 101/101/101 | halt |
+| PngCrcBenchmark.jdkCrc32 | length=1024 | us/op | 0.111 ± 0.000 | 0.112 ± 0.001 | 0.113 ± 0.000 | +0.7% | si' | 101/100/101 | halt |
+| PngCrcBenchmark.jdkCrc32 | length=65536 | us/op | 4.146 ± 0.005 | 4.160 ± 0.019 | 4.194 ± 0.004 | +0.8% | no | 100/100/102 | halt |
+| PngCrcBenchmark.jdkCrc32 | length=1048576 | us/op | 65.649 ± 0.621 | 65.608 ± 0.265 | 66.224 ± 0.048 | +0.9% | no | 100/101/100 | halt |
+| PngCrcBenchmark.pngCrcPerChunk | length=1024 | us/op | 3.102 ± 0.045 | 2.049 ± 0.006 | 2.069 ± 0.002 | +1.0% | no | 101/101/101 | halt |
+| PngCrcBenchmark.pngCrcPerChunk | length=65536 | us/op | 132.500 ± 0.898 | 131.587 ± 0.344 | 132.814 ± 0.142 | +0.9% | no | 104/100/109 | halt |
+| PngCrcBenchmark.pngCrcPerChunk | length=1048576 | us/op | 2092.723 ± 3.852 | 2112.461 ± 6.066 | 2131.512 ± 1.682 | +0.9% | no | 101/101/101 | halt |
+| ConvertToPngBenchmark.convertToPng | size=256 | ms/op | 7.553 ± 0.050 | 6.763 ± 0.053 | 6.884 ± 0.030 | +1.8% | no | 103/103/102 | halt |
+| ConvertToPngBenchmark.convertToPng | size=1024 | ms/op | 123.763 ± 0.554 | 112.872 ± 1.039 | 114.108 ± 1.311 | +1.1% | si' | 101/101/103 | halt |
+
+fork totali: 54; iterazioni totali: 5484; media per fork: 101.6; halt alla 100a: 7
+
+Tabella generata da [S3/compare.py](S3/compare.py) (`python3 S3/compare.py workingNotes/benchmarking`).
+
+## Analisi S3
+
+**1. Halt sempre alla prima occasione utile.** 54 fork su 54 fermati da AMBER; 100-109 iterazioni per fork (media
+101.6), mai il tetto di 500. Il modello giudica stabile la serie gia' alla prima finestra di 100 iterazioni: il vincolo
+che decide la durata e' la finestra minima, non il modello. Coerente con S1/S2, dove gli errori erano gia' sotto l'1-2%
+con 5 x 1 s di warm-up: per questi benchmark il warm-up fisso non era sottodimensionato.
+
+**2. Tempo.** Libreria 8 min 42 s (S2: 8 min 18 s, S1: 8 min 16 s); backend 1 min 11 s (S2: 1 min 03 s). AMBER costa
+~5-13% in piu': ~10 s per fork di finestra minima (= 5 s + 5 s di S2) piu' le chiamate HTTP al servizio dalla 100a
+iterazione in poi (~90 ms ciascuna) e la latenza tra iterazioni. Nessun risparmio, come previsto dall'analisi del jar.
+
+**3. Warm-up incluso nella misura.** Quando l'halt arriva alla 100a iterazione, "le ultime 100 iterazioni di warm-up"
+sono **tutte** le iterazioni del fork, prima compresa: AMBER non scarta nulla. Verificato sui rawData: la prima
+iterazione e' piu' lenta (es. GRAY_CONTENT 1024: 49.3 ms contro ~36.6), ma pesa 1/100 sulla media; le prime 10
+iterazioni sono entro +-1% delle ultime 10 quasi ovunque (max +3.8% su GRAY_CONTENT 1024). Effetto sulla media: ~0.3%
+al piu'. Con iterazioni da 100 ms il JIT e' gia' a regime dopo poche iterazioni.
+
+**4. Punteggi.** S3 e' entro **+-3%** da S2 su tutti i 18 casi, ma con uno scostamento sistematico verso l'alto di
+~+1% (16/18 casi tra +0.6% e +1.9%; anche il controllo `jdkCrc32`, codice non modificato, +0.7/+0.9%). In 9/18 casi
+gli intervalli non si sovrappongono: gli errori di S3 sono molto stretti (300 campioni), quindi anche differenze
+dell'1% risultano "fuori errore". Lo scostamento non e' spiegato dal warm-up incluso (punto 3, <=0.3%); cause possibili,
+non separabili con questi dati: iterazioni da 100 ms (piu' overhead di sincronizzazione per iterazione), attivita' del
+servizio JPT (TensorFlow) sulla stessa CPU tra un'iterazione e l'altra, stato termico/batteria diverso. Le due celle
+B2 1024 (-0.8%, -3.0%) vanno nella direzione opposta, ma li' l'errore di S2 era ampio (+-68, +-137 us).
+
+**5. Le conclusioni di S1 -> S2 non cambiano.** Rispetto a S1, S3 riproduce: H1+H3 su B1 (es. RGB 1024 112.4 -> 103.8
+ms, -7.6%), la regressione H2 su B2 (+39-46%), il guadagno di `pngCrcPerChunk` solo a 1 KiB (-33%), il miglioramento
+del backend B4 (-8.9% / -7.8%), e `jdkCrc32` invariato. Il warm-up dinamico conferma le misure a warm-up fisso; con
+questa configurazione di AMBER il suo valore e' di verifica (la serie e' stabile), non di risparmio.
+
+**Limiti da citare nel report:** (a) jar AMBER pubblicato diverso dal sorgente (iterazioni da 100 ms riprodotte via
+CLI); (b) tutti gli endpoint del servizio usano FCN (bug `setup.py`), quindi "oscnn" e' nominale; (c) servizio senza
+Docker (venv Python 3.9 + wrapper import order); (d) `-hhost` e porta 5001, non `-host`/50001 come nel tutorial.

@@ -1,0 +1,724 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 27.0.1.1, OpenJDK 64-Bit Server VM, 27.0.1.1
+# VM invoker: /usr/lib/jvm/java-27-openjdk/bin/java
+# VM options: <none>
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 100 ms each
+# Measurement: 5 iterations, 100 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng
+# Parameters: (size = 256)
+
+# Run progress: 0.00% complete, ETA 00:00:06
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 14.508 ms/op
+# Warmup Iteration   2: 7.642 ms/op
+# Warmup Iteration   3: 7.801 ms/op
+# Warmup Iteration   4: 7.566 ms/op
+# Warmup Iteration   5: 7.080 ms/op
+# Warmup Iteration   6: 6.884 ms/op
+# Warmup Iteration   7: 7.047 ms/op
+# Warmup Iteration   8: 6.871 ms/op
+# Warmup Iteration   9: 7.058 ms/op
+# Warmup Iteration  10: 7.038 ms/op
+# Warmup Iteration  11: 6.903 ms/op
+# Warmup Iteration  12: 6.995 ms/op
+# Warmup Iteration  13: 6.925 ms/op
+# Warmup Iteration  14: 7.066 ms/op
+# Warmup Iteration  15: 6.831 ms/op
+# Warmup Iteration  16: 6.972 ms/op
+# Warmup Iteration  17: 7.002 ms/op
+# Warmup Iteration  18: 6.849 ms/op
+# Warmup Iteration  19: 6.945 ms/op
+# Warmup Iteration  20: 6.778 ms/op
+# Warmup Iteration  21: 6.958 ms/op
+# Warmup Iteration  22: 6.861 ms/op
+# Warmup Iteration  23: 6.928 ms/op
+# Warmup Iteration  24: 6.942 ms/op
+# Warmup Iteration  25: 6.792 ms/op
+# Warmup Iteration  26: 7.038 ms/op
+# Warmup Iteration  27: 6.885 ms/op
+# Warmup Iteration  28: 6.922 ms/op
+# Warmup Iteration  29: 6.801 ms/op
+# Warmup Iteration  30: 6.904 ms/op
+# Warmup Iteration  31: 6.922 ms/op
+# Warmup Iteration  32: 6.868 ms/op
+# Warmup Iteration  33: 6.906 ms/op
+# Warmup Iteration  34: 6.780 ms/op
+# Warmup Iteration  35: 6.963 ms/op
+# Warmup Iteration  36: 6.771 ms/op
+# Warmup Iteration  37: 6.896 ms/op
+# Warmup Iteration  38: 6.889 ms/op
+# Warmup Iteration  39: 6.750 ms/op
+# Warmup Iteration  40: 6.879 ms/op
+# Warmup Iteration  41: 6.768 ms/op
+# Warmup Iteration  42: 6.947 ms/op
+# Warmup Iteration  43: 6.797 ms/op
+# Warmup Iteration  44: 6.882 ms/op
+# Warmup Iteration  45: 6.875 ms/op
+# Warmup Iteration  46: 6.760 ms/op
+# Warmup Iteration  47: 6.939 ms/op
+# Warmup Iteration  48: 6.802 ms/op
+# Warmup Iteration  49: 6.889 ms/op
+# Warmup Iteration  50: 6.781 ms/op
+# Warmup Iteration  51: 6.957 ms/op
+# Warmup Iteration  52: 6.943 ms/op
+# Warmup Iteration  53: 6.748 ms/op
+# Warmup Iteration  54: 6.838 ms/op
+# Warmup Iteration  55: 6.733 ms/op
+# Warmup Iteration  56: 6.874 ms/op
+# Warmup Iteration  57: 6.850 ms/op
+# Warmup Iteration  58: 6.731 ms/op
+# Warmup Iteration  59: 6.833 ms/op
+# Warmup Iteration  60: 6.733 ms/op
+# Warmup Iteration  61: 6.982 ms/op
+# Warmup Iteration  62: 6.733 ms/op
+# Warmup Iteration  63: 6.895 ms/op
+# Warmup Iteration  64: 6.885 ms/op
+# Warmup Iteration  65: 6.724 ms/op
+# Warmup Iteration  66: 6.829 ms/op
+# Warmup Iteration  67: 6.738 ms/op
+# Warmup Iteration  68: 6.883 ms/op
+# Warmup Iteration  69: 6.737 ms/op
+# Warmup Iteration  70: 6.886 ms/op
+# Warmup Iteration  71: 6.917 ms/op
+# Warmup Iteration  72: 6.751 ms/op
+# Warmup Iteration  73: 6.835 ms/op
+# Warmup Iteration  74: 6.718 ms/op
+# Warmup Iteration  75: 6.891 ms/op
+# Warmup Iteration  76: 6.744 ms/op
+# Warmup Iteration  77: 6.818 ms/op
+# Warmup Iteration  78: 6.871 ms/op
+# Warmup Iteration  79: 6.738 ms/op
+# Warmup Iteration  80: 6.930 ms/op
+# Warmup Iteration  81: 6.750 ms/op
+# Warmup Iteration  82: 6.839 ms/op
+# Warmup Iteration  83: 6.729 ms/op
+# Warmup Iteration  84: 6.875 ms/op
+# Warmup Iteration  85: 6.837 ms/op
+# Warmup Iteration  86: 6.762 ms/op
+# Warmup Iteration  87: 6.873 ms/op
+# Warmup Iteration  88: 6.720 ms/op
+# Warmup Iteration  89: 6.881 ms/op
+# Warmup Iteration  90: 6.774 ms/op
+# Warmup Iteration  91: 6.822 ms/op
+# Warmup Iteration  92: 6.719 ms/op
+# Warmup Iteration  93: 6.825 ms/op
+# Warmup Iteration  94: 6.884 ms/op
+# Warmup Iteration  95: 6.721 ms/op
+# Warmup Iteration  96: 6.892 ms/op
+# Warmup Iteration  97: 6.727 ms/op
+# Warmup Iteration  98: 6.884 ms/op
+# Warmup Iteration  99: 6.725 ms/op
+# Warmup Iteration 100: 6.916 ms/op
+# Warmup Iteration 101: 7.941 ms/op
+# Warmup Iteration 102: 6.793 ms/op
+# Warmup Iteration 103: 6.917 ms/op
+Halt eseguito
+
+# Run progress: 16.67% complete, ETA 00:00:56
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 13.408 ms/op
+# Warmup Iteration   2: 7.805 ms/op
+# Warmup Iteration   3: 7.626 ms/op
+# Warmup Iteration   4: 6.934 ms/op
+# Warmup Iteration   5: 7.077 ms/op
+# Warmup Iteration   6: 6.919 ms/op
+# Warmup Iteration   7: 7.062 ms/op
+# Warmup Iteration   8: 6.899 ms/op
+# Warmup Iteration   9: 7.027 ms/op
+# Warmup Iteration  10: 7.067 ms/op
+# Warmup Iteration  11: 6.873 ms/op
+# Warmup Iteration  12: 6.991 ms/op
+# Warmup Iteration  13: 6.853 ms/op
+# Warmup Iteration  14: 7.018 ms/op
+# Warmup Iteration  15: 7.047 ms/op
+# Warmup Iteration  16: 6.898 ms/op
+# Warmup Iteration  17: 6.960 ms/op
+# Warmup Iteration  18: 6.872 ms/op
+# Warmup Iteration  19: 6.952 ms/op
+# Warmup Iteration  20: 6.805 ms/op
+# Warmup Iteration  21: 6.937 ms/op
+# Warmup Iteration  22: 6.948 ms/op
+# Warmup Iteration  23: 6.808 ms/op
+# Warmup Iteration  24: 6.956 ms/op
+# Warmup Iteration  25: 6.792 ms/op
+# Warmup Iteration  26: 6.943 ms/op
+# Warmup Iteration  27: 6.807 ms/op
+# Warmup Iteration  28: 6.919 ms/op
+# Warmup Iteration  29: 6.944 ms/op
+# Warmup Iteration  30: 6.800 ms/op
+# Warmup Iteration  31: 6.897 ms/op
+# Warmup Iteration  32: 6.801 ms/op
+# Warmup Iteration  33: 6.987 ms/op
+# Warmup Iteration  34: 6.806 ms/op
+# Warmup Iteration  35: 6.930 ms/op
+# Warmup Iteration  36: 6.862 ms/op
+# Warmup Iteration  37: 6.760 ms/op
+# Warmup Iteration  38: 6.873 ms/op
+# Warmup Iteration  39: 6.758 ms/op
+# Warmup Iteration  40: 6.856 ms/op
+# Warmup Iteration  41: 6.767 ms/op
+# Warmup Iteration  42: 6.866 ms/op
+# Warmup Iteration  43: 6.863 ms/op
+# Warmup Iteration  44: 6.805 ms/op
+# Warmup Iteration  45: 6.864 ms/op
+# Warmup Iteration  46: 6.752 ms/op
+# Warmup Iteration  47: 6.860 ms/op
+# Warmup Iteration  48: 6.761 ms/op
+# Warmup Iteration  49: 6.915 ms/op
+# Warmup Iteration  50: 6.860 ms/op
+# Warmup Iteration  51: 6.765 ms/op
+# Warmup Iteration  52: 6.939 ms/op
+# Warmup Iteration  53: 6.718 ms/op
+# Warmup Iteration  54: 7.027 ms/op
+# Warmup Iteration  55: 6.751 ms/op
+# Warmup Iteration  56: 6.834 ms/op
+# Warmup Iteration  57: 6.828 ms/op
+# Warmup Iteration  58: 6.963 ms/op
+# Warmup Iteration  59: 6.918 ms/op
+# Warmup Iteration  60: 6.728 ms/op
+# Warmup Iteration  61: 6.928 ms/op
+# Warmup Iteration  62: 7.005 ms/op
+# Warmup Iteration  63: 6.772 ms/op
+# Warmup Iteration  64: 6.875 ms/op
+# Warmup Iteration  65: 6.745 ms/op
+# Warmup Iteration  66: 6.835 ms/op
+# Warmup Iteration  67: 6.754 ms/op
+# Warmup Iteration  68: 6.883 ms/op
+# Warmup Iteration  69: 6.830 ms/op
+# Warmup Iteration  70: 6.728 ms/op
+# Warmup Iteration  71: 6.823 ms/op
+# Warmup Iteration  72: 6.792 ms/op
+# Warmup Iteration  73: 6.873 ms/op
+# Warmup Iteration  74: 6.815 ms/op
+# Warmup Iteration  75: 6.739 ms/op
+# Warmup Iteration  76: 6.838 ms/op
+# Warmup Iteration  77: 6.743 ms/op
+# Warmup Iteration  78: 6.833 ms/op
+# Warmup Iteration  79: 6.753 ms/op
+# Warmup Iteration  80: 6.841 ms/op
+# Warmup Iteration  81: 6.836 ms/op
+# Warmup Iteration  82: 6.732 ms/op
+# Warmup Iteration  83: 6.849 ms/op
+# Warmup Iteration  84: 6.737 ms/op
+# Warmup Iteration  85: 6.873 ms/op
+# Warmup Iteration  86: 6.824 ms/op
+# Warmup Iteration  87: 6.752 ms/op
+# Warmup Iteration  88: 6.833 ms/op
+# Warmup Iteration  89: 6.720 ms/op
+# Warmup Iteration  90: 6.824 ms/op
+# Warmup Iteration  91: 6.821 ms/op
+# Warmup Iteration  92: 6.713 ms/op
+# Warmup Iteration  93: 6.832 ms/op
+# Warmup Iteration  94: 6.701 ms/op
+# Warmup Iteration  95: 6.835 ms/op
+# Warmup Iteration  96: 6.702 ms/op
+# Warmup Iteration  97: 6.886 ms/op
+# Warmup Iteration  98: 6.797 ms/op
+# Warmup Iteration  99: 6.716 ms/op
+# Warmup Iteration 100: 6.819 ms/op
+# Warmup Iteration 101: 7.728 ms/op
+# Warmup Iteration 102: 7.019 ms/op
+# Warmup Iteration 103: 6.914 ms/op
+Halt eseguito
+
+# Run progress: 33.33% complete, ETA 00:00:45
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 13.516 ms/op
+# Warmup Iteration   2: 7.555 ms/op
+# Warmup Iteration   3: 7.859 ms/op
+# Warmup Iteration   4: 7.175 ms/op
+# Warmup Iteration   5: 7.114 ms/op
+# Warmup Iteration   6: 6.981 ms/op
+# Warmup Iteration   7: 7.209 ms/op
+# Warmup Iteration   8: 6.938 ms/op
+# Warmup Iteration   9: 7.246 ms/op
+# Warmup Iteration  10: 7.021 ms/op
+# Warmup Iteration  11: 7.062 ms/op
+# Warmup Iteration  12: 7.104 ms/op
+# Warmup Iteration  13: 6.837 ms/op
+# Warmup Iteration  14: 7.077 ms/op
+# Warmup Iteration  15: 6.822 ms/op
+# Warmup Iteration  16: 7.122 ms/op
+# Warmup Iteration  17: 7.003 ms/op
+# Warmup Iteration  18: 6.954 ms/op
+# Warmup Iteration  19: 7.065 ms/op
+# Warmup Iteration  20: 6.790 ms/op
+# Warmup Iteration  21: 7.038 ms/op
+# Warmup Iteration  22: 6.814 ms/op
+# Warmup Iteration  23: 7.048 ms/op
+# Warmup Iteration  24: 7.039 ms/op
+# Warmup Iteration  25: 6.782 ms/op
+# Warmup Iteration  26: 6.972 ms/op
+# Warmup Iteration  27: 6.826 ms/op
+# Warmup Iteration  28: 6.921 ms/op
+# Warmup Iteration  29: 6.758 ms/op
+# Warmup Iteration  30: 6.995 ms/op
+# Warmup Iteration  31: 6.948 ms/op
+# Warmup Iteration  32: 6.778 ms/op
+# Warmup Iteration  33: 6.942 ms/op
+# Warmup Iteration  34: 6.768 ms/op
+# Warmup Iteration  35: 6.965 ms/op
+# Warmup Iteration  36: 6.782 ms/op
+# Warmup Iteration  37: 6.941 ms/op
+# Warmup Iteration  38: 6.934 ms/op
+# Warmup Iteration  39: 7.050 ms/op
+# Warmup Iteration  40: 6.942 ms/op
+# Warmup Iteration  41: 6.815 ms/op
+# Warmup Iteration  42: 6.874 ms/op
+# Warmup Iteration  43: 6.782 ms/op
+# Warmup Iteration  44: 7.235 ms/op
+# Warmup Iteration  45: 6.887 ms/op
+# Warmup Iteration  46: 6.891 ms/op
+# Warmup Iteration  47: 6.850 ms/op
+# Warmup Iteration  48: 6.783 ms/op
+# Warmup Iteration  49: 6.868 ms/op
+# Warmup Iteration  50: 6.815 ms/op
+# Warmup Iteration  51: 6.949 ms/op
+# Warmup Iteration  52: 6.859 ms/op
+# Warmup Iteration  53: 6.993 ms/op
+# Warmup Iteration  54: 6.918 ms/op
+# Warmup Iteration  55: 6.743 ms/op
+# Warmup Iteration  56: 6.957 ms/op
+# Warmup Iteration  57: 6.766 ms/op
+# Warmup Iteration  58: 6.866 ms/op
+# Warmup Iteration  59: 6.898 ms/op
+# Warmup Iteration  60: 6.764 ms/op
+# Warmup Iteration  61: 6.920 ms/op
+# Warmup Iteration  62: 6.758 ms/op
+# Warmup Iteration  63: 6.874 ms/op
+# Warmup Iteration  64: 6.961 ms/op
+# Warmup Iteration  65: 6.734 ms/op
+# Warmup Iteration  66: 6.909 ms/op
+# Warmup Iteration  67: 6.743 ms/op
+# Warmup Iteration  68: 6.937 ms/op
+# Warmup Iteration  69: 6.720 ms/op
+# Warmup Iteration  70: 6.876 ms/op
+# Warmup Iteration  71: 6.867 ms/op
+# Warmup Iteration  72: 6.751 ms/op
+# Warmup Iteration  73: 6.916 ms/op
+# Warmup Iteration  74: 6.759 ms/op
+# Warmup Iteration  75: 6.940 ms/op
+# Warmup Iteration  76: 6.874 ms/op
+# Warmup Iteration  77: 6.734 ms/op
+# Warmup Iteration  78: 6.911 ms/op
+# Warmup Iteration  79: 6.714 ms/op
+# Warmup Iteration  80: 6.934 ms/op
+# Warmup Iteration  81: 6.746 ms/op
+# Warmup Iteration  82: 6.922 ms/op
+# Warmup Iteration  83: 6.951 ms/op
+# Warmup Iteration  84: 6.747 ms/op
+# Warmup Iteration  85: 6.886 ms/op
+# Warmup Iteration  86: 6.773 ms/op
+# Warmup Iteration  87: 6.911 ms/op
+# Warmup Iteration  88: 6.733 ms/op
+# Warmup Iteration  89: 6.856 ms/op
+# Warmup Iteration  90: 6.890 ms/op
+# Warmup Iteration  91: 6.762 ms/op
+# Warmup Iteration  92: 6.897 ms/op
+# Warmup Iteration  93: 6.712 ms/op
+# Warmup Iteration  94: 6.906 ms/op
+# Warmup Iteration  95: 6.872 ms/op
+# Warmup Iteration  96: 6.739 ms/op
+# Warmup Iteration  97: 6.897 ms/op
+# Warmup Iteration  98: 6.725 ms/op
+# Warmup Iteration  99: 6.882 ms/op
+# Warmup Iteration 100: 6.810 ms/op
+# Warmup Iteration 101: 7.856 ms/op
+# Warmup Iteration 102: 7.006 ms/op
+Halt eseguito
+
+
+Result "it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng":
+  6.884 ±(99.9%) 0.030 ms/op [Average]
+  (min, avg, max) = (6.701, 6.884, 7.941), stdev = 0.158
+  CI (99.9%): [6.854, 6.914] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 27.0.1.1, OpenJDK 64-Bit Server VM, 27.0.1.1
+# VM invoker: /usr/lib/jvm/java-27-openjdk/bin/java
+# VM options: <none>
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 5 iterations, 100 ms each
+# Measurement: 5 iterations, 100 ms each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng
+# Parameters: (size = 1024)
+
+# Run progress: 50.00% complete, ETA 00:00:33
+# Fork: 1 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 186.776 ms/op
+# Warmup Iteration   2: 117.181 ms/op
+# Warmup Iteration   3: 173.337 ms/op
+# Warmup Iteration   4: 116.461 ms/op
+# Warmup Iteration   5: 117.460 ms/op
+# Warmup Iteration   6: 115.130 ms/op
+# Warmup Iteration   7: 118.103 ms/op
+# Warmup Iteration   8: 115.890 ms/op
+# Warmup Iteration   9: 118.775 ms/op
+# Warmup Iteration  10: 112.282 ms/op
+# Warmup Iteration  11: 113.411 ms/op
+# Warmup Iteration  12: 112.269 ms/op
+# Warmup Iteration  13: 116.912 ms/op
+# Warmup Iteration  14: 112.309 ms/op
+# Warmup Iteration  15: 112.312 ms/op
+# Warmup Iteration  16: 112.089 ms/op
+# Warmup Iteration  17: 114.598 ms/op
+# Warmup Iteration  18: 112.074 ms/op
+# Warmup Iteration  19: 114.117 ms/op
+# Warmup Iteration  20: 112.189 ms/op
+# Warmup Iteration  21: 116.128 ms/op
+# Warmup Iteration  22: 112.067 ms/op
+# Warmup Iteration  23: 112.158 ms/op
+# Warmup Iteration  24: 111.838 ms/op
+# Warmup Iteration  25: 114.866 ms/op
+# Warmup Iteration  26: 112.600 ms/op
+# Warmup Iteration  27: 111.972 ms/op
+# Warmup Iteration  28: 111.949 ms/op
+# Warmup Iteration  29: 114.269 ms/op
+# Warmup Iteration  30: 112.027 ms/op
+# Warmup Iteration  31: 112.312 ms/op
+# Warmup Iteration  32: 111.997 ms/op
+# Warmup Iteration  33: 114.745 ms/op
+# Warmup Iteration  34: 112.051 ms/op
+# Warmup Iteration  35: 112.767 ms/op
+# Warmup Iteration  36: 111.908 ms/op
+# Warmup Iteration  37: 114.672 ms/op
+# Warmup Iteration  38: 112.567 ms/op
+# Warmup Iteration  39: 112.578 ms/op
+# Warmup Iteration  40: 112.112 ms/op
+# Warmup Iteration  41: 114.378 ms/op
+# Warmup Iteration  42: 112.102 ms/op
+# Warmup Iteration  43: 112.611 ms/op
+# Warmup Iteration  44: 112.089 ms/op
+# Warmup Iteration  45: 114.614 ms/op
+# Warmup Iteration  46: 112.001 ms/op
+# Warmup Iteration  47: 112.491 ms/op
+# Warmup Iteration  48: 111.787 ms/op
+# Warmup Iteration  49: 115.047 ms/op
+# Warmup Iteration  50: 112.113 ms/op
+# Warmup Iteration  51: 112.597 ms/op
+# Warmup Iteration  52: 112.094 ms/op
+# Warmup Iteration  53: 114.942 ms/op
+# Warmup Iteration  54: 112.057 ms/op
+# Warmup Iteration  55: 112.706 ms/op
+# Warmup Iteration  56: 111.928 ms/op
+# Warmup Iteration  57: 114.189 ms/op
+# Warmup Iteration  58: 111.874 ms/op
+# Warmup Iteration  59: 112.414 ms/op
+# Warmup Iteration  60: 111.956 ms/op
+# Warmup Iteration  61: 114.531 ms/op
+# Warmup Iteration  62: 112.328 ms/op
+# Warmup Iteration  63: 112.413 ms/op
+# Warmup Iteration  64: 112.016 ms/op
+# Warmup Iteration  65: 114.211 ms/op
+# Warmup Iteration  66: 112.109 ms/op
+# Warmup Iteration  67: 112.510 ms/op
+# Warmup Iteration  68: 111.855 ms/op
+# Warmup Iteration  69: 114.212 ms/op
+# Warmup Iteration  70: 112.072 ms/op
+# Warmup Iteration  71: 112.711 ms/op
+# Warmup Iteration  72: 111.883 ms/op
+# Warmup Iteration  73: 114.326 ms/op
+# Warmup Iteration  74: 111.965 ms/op
+# Warmup Iteration  75: 112.563 ms/op
+# Warmup Iteration  76: 111.824 ms/op
+# Warmup Iteration  77: 114.275 ms/op
+# Warmup Iteration  78: 112.000 ms/op
+# Warmup Iteration  79: 113.354 ms/op
+# Warmup Iteration  80: 112.342 ms/op
+# Warmup Iteration  81: 114.270 ms/op
+# Warmup Iteration  82: 112.076 ms/op
+# Warmup Iteration  83: 112.522 ms/op
+# Warmup Iteration  84: 111.941 ms/op
+# Warmup Iteration  85: 114.016 ms/op
+# Warmup Iteration  86: 112.137 ms/op
+# Warmup Iteration  87: 112.496 ms/op
+# Warmup Iteration  88: 112.049 ms/op
+# Warmup Iteration  89: 113.788 ms/op
+# Warmup Iteration  90: 111.960 ms/op
+# Warmup Iteration  91: 112.675 ms/op
+# Warmup Iteration  92: 112.038 ms/op
+# Warmup Iteration  93: 113.814 ms/op
+# Warmup Iteration  94: 111.823 ms/op
+# Warmup Iteration  95: 112.346 ms/op
+# Warmup Iteration  96: 111.922 ms/op
+# Warmup Iteration  97: 113.830 ms/op
+# Warmup Iteration  98: 112.345 ms/op
+# Warmup Iteration  99: 111.837 ms/op
+# Warmup Iteration 100: 112.237 ms/op
+# Warmup Iteration 101: 166.817 ms/op
+Halt eseguito
+
+# Run progress: 66.67% complete, ETA 00:00:23
+# Fork: 2 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 186.986 ms/op
+# Warmup Iteration   2: 117.364 ms/op
+# Warmup Iteration   3: 122.390 ms/op
+# Warmup Iteration   4: 115.469 ms/op
+# Warmup Iteration   5: 116.087 ms/op
+# Warmup Iteration   6: 116.058 ms/op
+# Warmup Iteration   7: 115.813 ms/op
+# Warmup Iteration   8: 115.988 ms/op
+# Warmup Iteration   9: 117.736 ms/op
+# Warmup Iteration  10: 112.588 ms/op
+# Warmup Iteration  11: 112.394 ms/op
+# Warmup Iteration  12: 112.260 ms/op
+# Warmup Iteration  13: 116.823 ms/op
+# Warmup Iteration  14: 116.435 ms/op
+# Warmup Iteration  15: 120.239 ms/op
+# Warmup Iteration  16: 112.212 ms/op
+# Warmup Iteration  17: 115.168 ms/op
+# Warmup Iteration  18: 112.502 ms/op
+# Warmup Iteration  19: 112.309 ms/op
+# Warmup Iteration  20: 112.571 ms/op
+# Warmup Iteration  21: 114.666 ms/op
+# Warmup Iteration  22: 113.097 ms/op
+# Warmup Iteration  23: 112.340 ms/op
+# Warmup Iteration  24: 112.157 ms/op
+# Warmup Iteration  25: 115.289 ms/op
+# Warmup Iteration  26: 112.388 ms/op
+# Warmup Iteration  27: 112.173 ms/op
+# Warmup Iteration  28: 112.154 ms/op
+# Warmup Iteration  29: 115.043 ms/op
+# Warmup Iteration  30: 112.451 ms/op
+# Warmup Iteration  31: 112.441 ms/op
+# Warmup Iteration  32: 112.060 ms/op
+# Warmup Iteration  33: 115.145 ms/op
+# Warmup Iteration  34: 112.142 ms/op
+# Warmup Iteration  35: 111.991 ms/op
+# Warmup Iteration  36: 112.229 ms/op
+# Warmup Iteration  37: 115.873 ms/op
+# Warmup Iteration  38: 112.495 ms/op
+# Warmup Iteration  39: 113.475 ms/op
+# Warmup Iteration  40: 112.203 ms/op
+# Warmup Iteration  41: 115.477 ms/op
+# Warmup Iteration  42: 112.334 ms/op
+# Warmup Iteration  43: 112.184 ms/op
+# Warmup Iteration  44: 112.231 ms/op
+# Warmup Iteration  45: 116.277 ms/op
+# Warmup Iteration  46: 112.105 ms/op
+# Warmup Iteration  47: 112.309 ms/op
+# Warmup Iteration  48: 112.087 ms/op
+# Warmup Iteration  49: 116.324 ms/op
+# Warmup Iteration  50: 112.159 ms/op
+# Warmup Iteration  51: 112.014 ms/op
+# Warmup Iteration  52: 111.987 ms/op
+# Warmup Iteration  53: 115.457 ms/op
+# Warmup Iteration  54: 112.258 ms/op
+# Warmup Iteration  55: 112.166 ms/op
+# Warmup Iteration  56: 112.532 ms/op
+# Warmup Iteration  57: 115.617 ms/op
+# Warmup Iteration  58: 112.441 ms/op
+# Warmup Iteration  59: 114.486 ms/op
+# Warmup Iteration  60: 112.502 ms/op
+# Warmup Iteration  61: 114.172 ms/op
+# Warmup Iteration  62: 112.551 ms/op
+# Warmup Iteration  63: 112.297 ms/op
+# Warmup Iteration  64: 112.591 ms/op
+# Warmup Iteration  65: 115.854 ms/op
+# Warmup Iteration  66: 112.350 ms/op
+# Warmup Iteration  67: 111.971 ms/op
+# Warmup Iteration  68: 112.319 ms/op
+# Warmup Iteration  69: 114.236 ms/op
+# Warmup Iteration  70: 112.042 ms/op
+# Warmup Iteration  71: 112.108 ms/op
+# Warmup Iteration  72: 112.052 ms/op
+# Warmup Iteration  73: 114.263 ms/op
+# Warmup Iteration  74: 112.108 ms/op
+# Warmup Iteration  75: 112.295 ms/op
+# Warmup Iteration  76: 112.338 ms/op
+# Warmup Iteration  77: 114.344 ms/op
+# Warmup Iteration  78: 112.034 ms/op
+# Warmup Iteration  79: 112.288 ms/op
+# Warmup Iteration  80: 112.867 ms/op
+# Warmup Iteration  81: 113.800 ms/op
+# Warmup Iteration  82: 112.152 ms/op
+# Warmup Iteration  83: 112.071 ms/op
+# Warmup Iteration  84: 112.510 ms/op
+# Warmup Iteration  85: 114.400 ms/op
+# Warmup Iteration  86: 112.060 ms/op
+# Warmup Iteration  87: 112.120 ms/op
+# Warmup Iteration  88: 112.523 ms/op
+# Warmup Iteration  89: 113.822 ms/op
+# Warmup Iteration  90: 112.226 ms/op
+# Warmup Iteration  91: 112.340 ms/op
+# Warmup Iteration  92: 112.546 ms/op
+# Warmup Iteration  93: 113.993 ms/op
+# Warmup Iteration  94: 112.263 ms/op
+# Warmup Iteration  95: 112.194 ms/op
+# Warmup Iteration  96: 112.320 ms/op
+# Warmup Iteration  97: 113.829 ms/op
+# Warmup Iteration  98: 112.213 ms/op
+# Warmup Iteration  99: 111.991 ms/op
+# Warmup Iteration 100: 112.424 ms/op
+# Warmup Iteration 101: 175.429 ms/op
+Halt eseguito
+
+# Run progress: 83.33% complete, ETA 00:00:11
+# Fork: 3 of 3
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/home/peenguino/.m2/repository/org/openjdk/jmh/jmh-core/1.37-extended/jmh-core-1.37-extended.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 185.120 ms/op
+# Warmup Iteration   2: 116.374 ms/op
+# Warmup Iteration   3: 177.538 ms/op
+# Warmup Iteration   4: 117.544 ms/op
+# Warmup Iteration   5: 115.645 ms/op
+# Warmup Iteration   6: 115.502 ms/op
+# Warmup Iteration   7: 115.737 ms/op
+# Warmup Iteration   8: 119.268 ms/op
+# Warmup Iteration   9: 112.856 ms/op
+# Warmup Iteration  10: 115.789 ms/op
+# Warmup Iteration  11: 111.927 ms/op
+# Warmup Iteration  12: 117.971 ms/op
+# Warmup Iteration  13: 112.319 ms/op
+# Warmup Iteration  14: 112.451 ms/op
+# Warmup Iteration  15: 112.308 ms/op
+# Warmup Iteration  16: 116.268 ms/op
+# Warmup Iteration  17: 111.976 ms/op
+# Warmup Iteration  18: 113.167 ms/op
+# Warmup Iteration  19: 116.223 ms/op
+# Warmup Iteration  20: 116.562 ms/op
+# Warmup Iteration  21: 112.948 ms/op
+# Warmup Iteration  22: 117.956 ms/op
+# Warmup Iteration  23: 112.322 ms/op
+# Warmup Iteration  24: 116.867 ms/op
+# Warmup Iteration  25: 112.789 ms/op
+# Warmup Iteration  26: 115.985 ms/op
+# Warmup Iteration  27: 112.014 ms/op
+# Warmup Iteration  28: 118.929 ms/op
+# Warmup Iteration  29: 112.916 ms/op
+# Warmup Iteration  30: 112.422 ms/op
+# Warmup Iteration  31: 112.188 ms/op
+# Warmup Iteration  32: 116.426 ms/op
+# Warmup Iteration  33: 113.018 ms/op
+# Warmup Iteration  34: 111.972 ms/op
+# Warmup Iteration  35: 111.942 ms/op
+# Warmup Iteration  36: 115.967 ms/op
+# Warmup Iteration  37: 113.548 ms/op
+# Warmup Iteration  38: 112.646 ms/op
+# Warmup Iteration  39: 112.020 ms/op
+# Warmup Iteration  40: 117.546 ms/op
+# Warmup Iteration  41: 112.599 ms/op
+# Warmup Iteration  42: 112.034 ms/op
+# Warmup Iteration  43: 112.069 ms/op
+# Warmup Iteration  44: 115.954 ms/op
+# Warmup Iteration  45: 112.765 ms/op
+# Warmup Iteration  46: 112.061 ms/op
+# Warmup Iteration  47: 111.899 ms/op
+# Warmup Iteration  48: 117.385 ms/op
+# Warmup Iteration  49: 112.107 ms/op
+# Warmup Iteration  50: 112.294 ms/op
+# Warmup Iteration  51: 111.928 ms/op
+# Warmup Iteration  52: 115.417 ms/op
+# Warmup Iteration  53: 111.957 ms/op
+# Warmup Iteration  54: 112.456 ms/op
+# Warmup Iteration  55: 114.171 ms/op
+# Warmup Iteration  56: 113.632 ms/op
+# Warmup Iteration  57: 112.020 ms/op
+# Warmup Iteration  58: 112.151 ms/op
+# Warmup Iteration  59: 112.146 ms/op
+# Warmup Iteration  60: 113.706 ms/op
+# Warmup Iteration  61: 112.156 ms/op
+# Warmup Iteration  62: 112.142 ms/op
+# Warmup Iteration  63: 112.361 ms/op
+# Warmup Iteration  64: 113.748 ms/op
+# Warmup Iteration  65: 112.080 ms/op
+# Warmup Iteration  66: 112.155 ms/op
+# Warmup Iteration  67: 112.119 ms/op
+# Warmup Iteration  68: 113.748 ms/op
+# Warmup Iteration  69: 112.132 ms/op
+# Warmup Iteration  70: 112.279 ms/op
+# Warmup Iteration  71: 112.053 ms/op
+# Warmup Iteration  72: 113.771 ms/op
+# Warmup Iteration  73: 112.366 ms/op
+# Warmup Iteration  74: 112.387 ms/op
+# Warmup Iteration  75: 112.494 ms/op
+# Warmup Iteration  76: 113.704 ms/op
+# Warmup Iteration  77: 112.079 ms/op
+# Warmup Iteration  78: 112.286 ms/op
+# Warmup Iteration  79: 112.104 ms/op
+# Warmup Iteration  80: 114.030 ms/op
+# Warmup Iteration  81: 114.921 ms/op
+# Warmup Iteration  82: 112.416 ms/op
+# Warmup Iteration  83: 112.127 ms/op
+# Warmup Iteration  84: 114.031 ms/op
+# Warmup Iteration  85: 112.371 ms/op
+# Warmup Iteration  86: 112.525 ms/op
+# Warmup Iteration  87: 113.130 ms/op
+# Warmup Iteration  88: 114.332 ms/op
+# Warmup Iteration  89: 112.208 ms/op
+# Warmup Iteration  90: 112.187 ms/op
+# Warmup Iteration  91: 111.982 ms/op
+# Warmup Iteration  92: 113.974 ms/op
+# Warmup Iteration  93: 112.312 ms/op
+# Warmup Iteration  94: 112.855 ms/op
+# Warmup Iteration  95: 112.075 ms/op
+# Warmup Iteration  96: 116.698 ms/op
+# Warmup Iteration  97: 112.015 ms/op
+# Warmup Iteration  98: 112.188 ms/op
+# Warmup Iteration  99: 112.006 ms/op
+# Warmup Iteration 100: 113.717 ms/op
+# Warmup Iteration 101: 166.931 ms/op
+# Warmup Iteration 102: 113.373 ms/op
+# Warmup Iteration 103: 112.881 ms/op
+Halt eseguito
+
+
+Result "it.course.imaging.benchmarks.ConvertToPngBenchmark.convertToPng":
+  114.108 ±(99.9%) 1.311 ms/op [Average]
+  (min, avg, max) = (111.787, 114.108, 175.429), stdev = 6.833
+  CI (99.9%): [112.797, 115.419] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:01:11
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                           (size)  Mode  Cnt    Score   Error  Units
+ConvertToPngBenchmark.convertToPng     256  avgt  300    6.884 ± 0.030  ms/op
+ConvertToPngBenchmark.convertToPng    1024  avgt  300  114.108 ± 1.311  ms/op
+
+Benchmark result is saved to /tmp/claude-1000/-home-peenguino-swDepCourseProject/19fa8319-3e68-497b-965c-d57edb12238d/scratchpad/s3-logs/backend.json

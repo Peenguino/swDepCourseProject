@@ -1,0 +1,23 @@
+--- /home/peenguino/swDepCourseProject/pom.xml	2026-11-27 12:35:54.495567016 +0100
++++ pom.xml	2026-11-28 12:52:07.182611982 +0100
+@@ -230,6 +230,11 @@
+           <annotationProcessorPaths>
+             <path>
+               <groupId>org.openjdk.jmh</groupId>
++              <artifactId>jmh-core</artifactId>
++              <version>1.37-extended</version>
++            </path>
++            <path>
++              <groupId>org.openjdk.jmh</groupId>
+               <artifactId>jmh-generator-annprocess</artifactId>
+               <version>${commons.jmh.version}</version>
+             </path>
+@@ -346,7 +351,7 @@
+     <dependency>
+       <groupId>org.openjdk.jmh</groupId>
+       <artifactId>jmh-core</artifactId>
+-      <version>1.37</version>
++      <version>1.37-extended</version>
+       <scope>test</scope>
+     </dependency>
+ 
